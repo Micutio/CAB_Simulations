@@ -7,7 +7,7 @@ from cab.cab_global_constants import GlobalConstants
 class GC(GlobalConstants):
     def __init__(self):
         super().__init__()
-        self.VERSION = 'version: 03-2016'
+        self.VERSION = '03-2016'
         self.TITLE = 'Foraging Ant'
         ################################
         #     SIMULATION CONSTANTS     #
@@ -24,15 +24,15 @@ class GC(GlobalConstants):
         ################################
         self.USE_HEX_CA = True
         self.USE_CA_BORDERS = True
-        self.DIM_X = 50  # How many cells is the ca wide?
-        self.DIM_Y = 50  # How many cells is the ca high?
-        self.CELL_SIZE = 9
+        self.DIM_X = 75  # How many cells is the ca wide?
+        self.DIM_Y = 75  # How many cells is the ca high?
+        self.CELL_SIZE = 7
         self.GRID_WIDTH = self.DIM_X * self.CELL_SIZE
         self.GRID_HEIGHT = self.DIM_Y * self.CELL_SIZE
         ################################
         #  SIMULATION SPEC. CONSTANTS  #
         ################################
-        self.MAX_ANTS = 50
+        self.MAX_ANTS = 25
         self.MAX_PHEROMONE = 100
         self.MAX_FOOD = 10000
         self.DIFFUSION = 0.001

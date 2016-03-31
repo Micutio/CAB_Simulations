@@ -16,16 +16,14 @@ class HiveAgent(CabAgent):
         self.max_ants = gc.MAX_ANTS
         self.food = 0
         self.dead = False
-        self.do_spawn = True
+        self.spawned = 0
         
 
     def perceive_and_act(self, ca, abm):
-        if self.do_spawn:
-            # Spawn all the ants.
-            for i in range(self.max_ants):
-                ant = AntAgent(self.x, self.y, self.gc)
-                abm.add_agent(ant)
-            self.do_spawn = False
+        if self.spawned < self.max_ants:
+            ant = AntAgent(self.x, self.y, self.gc)
+            abm.add_agent(ant)
+            self.spawned += 1
 
     def clone(self):
         return HiveAgent(x, y, gc)
@@ -97,6 +95,13 @@ class AntAgent(CabAgent):
             print('Ant Error: no valid hive bound cell found!')
 
     def get_cell_with_pheromone(self, target_ph, neighborhood):
+        """
+        Gets the cell with highest pheromone value (or random if no pheromones present)
+        from the immediate neighborhood.
+        :param: neighborhood is a dict of (x, y) -> cell mappings,
+        where cell is a tuple of (ca_cell, [agent(s) on cell]).
+        If no agent is on the cell then the list in the tuple is simply 'False'
+        """
         result = None
         result_list = []
         backup_list = []
@@ -117,14 +122,15 @@ class AntAgent(CabAgent):
             _y = self.y + d[1]
             if (_x, _y) in neighborhood:
                 cell = neighborhood[_x, _y]
-                if cell[0].pheromones[target_ph] > 0 and (not cell[1] or len(cell[1]) < 10):
+                if cell[0].pheromones[target_ph] > 0:  # and (not cell[1] or len(cell[1]) < 10):
                     ph = cell[0].pheromones[target_ph]
                     if ph > max_ph:
                         best_cell = cell
                         max_ph = ph
                         self.current_dir = i
                     result_list.append((cell, ph, i))
-                elif not cell[1] or len(cell[1]) < 10:
+                # elif not cell[1] or len(cell[1]) < 10:
+                else:
                     backup_list.append((cell, i))
         if result_list:
             if random.random() < 0.01:
@@ -170,6 +176,7 @@ class AntAgent(CabAgent):
         if agents_at_cell:
             for agent in agents_at_cell:
                 if agent.id == "hive":
+                    # print('found the hive!')
                     agent.food += self.food
                     self.has_food = False
 
@@ -177,6 +184,7 @@ class AntAgent(CabAgent):
         if agents_at_cell:
             for agent in agents_at_cell:
                 if agent.id == "food":
+                    # print('found the food!')
                     agent.food -= self.food
                     self.has_food = True
 
