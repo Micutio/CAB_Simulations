@@ -53,21 +53,21 @@ class Visualizer(Visualization):
 
             # In case we have an ant, draw its field of vision too.
             # Mostly for debugging purposes.
-            if agent.id == 'ant':
-                directions = [(1,  0), (1, -1), ( 0, -1), (-1,  0), (-1, 1), ( 0, 1)]
-                if agent.current_dir == 5:
-                    possible_dirs = [4, 5, 0]
-                elif agent.current_dir == 0:
-                    possible_dirs = [5, 0, 1]
-                else:
-                    possible_dirs = [agent.current_dir -1, agent.current_dir, agent.current_dir + 1]
-                for d in possible_dirs:
-                    try:
-                        cell = self.sys.ca.ca_grid[directions[d][0] + agent.x, directions[d][1] + agent.y]
-                        pygame.gfxdraw.filled_polygon(self.surface, cell.corners, (150, 150, 150))
-                        pygame.gfxdraw.aapolygon(self.surface, cell.corners, (255, 255, 255))
-                    except KeyError:
-                        pass
+            # if agent.id == 'ant':
+            #     directions = [(1,  0), (1, -1), ( 0, -1), (-1,  0), (-1, 1), ( 0, 1)]
+            #     if agent.current_dir == 5:
+            #         possible_dirs = [4, 5, 0]
+            #     elif agent.current_dir == 0:
+            #         possible_dirs = [5, 0, 1]
+            #     else:
+            #         possible_dirs = [agent.current_dir -1, agent.current_dir, agent.current_dir + 1]
+            #     for d in possible_dirs:
+            #         try:
+            #             cell = self.sys.ca.ca_grid[directions[d][0] + agent.x, directions[d][1] + agent.y]
+            #             pygame.gfxdraw.filled_polygon(self.surface, cell.corners, (150, 150, 150))
+            #             pygame.gfxdraw.aapolygon(self.surface, cell.corners, (255, 255, 255))
+            #         except KeyError:
+            #             pass
 
     def draw_cell(self, cell):
         """

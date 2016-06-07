@@ -34,6 +34,6 @@ class GC(GlobalConstants):
         ################################
         self.MAX_ANTS = 25
         self.MAX_PHEROMONE = 100
-        self.MAX_FOOD = 10000
+        self.MAX_FOOD = 100
         self.DIFFUSION = 0.001
         self.EVAPORATION = 0.001
