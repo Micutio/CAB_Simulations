@@ -1,8 +1,7 @@
 """
 Main module of the sugarscape simulation
 Updates:
-    10-10-2015: First Draft
-    07-11-2015: Complete rework, retrieval of all symbols and keystats
+    07-06-2016: First Draft
 """
 
 __author__ = 'Michael Wagner'
