@@ -4,6 +4,8 @@ This repository contains a collection of cellular automata / agent-based simulat
 
 ## Foraging Ant
 
+### Description
+
 Foraging Ant describes the teamwork of ants on their mission to find food and deliver it back to their anthill. By using two sorts of pheromones to mark their trails back and forth, these tiny soldiers manage to implicity communicate with one another and eventually create a nearly optimized trail.
 
 Simple features as
@@ -13,6 +15,10 @@ Simple features as
 * pheromone trails evaporating over time
 
 lead to an organic seeming behavior and lively little anthills.
+
+### Screenshot
+![alt text](https://github.com/micutio/CAB_Simulations/media/ant_screentshot1.png "Foraging Ant Screenshot")
+
 
 
 ## Sugarscape [Under Construction]
