@@ -29,6 +29,7 @@ class GC(GlobalConstants):
         self.CELL_SIZE = 7
         self.GRID_WIDTH = self.DIM_X * self.CELL_SIZE
         self.GRID_HEIGHT = self.DIM_Y * self.CELL_SIZE
+        self.DISPLAY_GRID = False
         ################################
         #  SIMULATION SPEC. CONSTANTS  #
         ################################

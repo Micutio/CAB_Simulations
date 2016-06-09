@@ -26,12 +26,7 @@ class Visualizer(Visualization):
         return Visualizer(gc, surface, cab_sys)
 
     def draw_agent(self, agent):
-        if agent.id == 'hive':
-            self.draw_agent_w_color(agent, (100, 0, 255))
-        elif agent.id == 'food':
-            self.draw_agent_w_color(agent, (255, 255, 0))
-        elif agent.id == 'ant':
-            self.draw_agent_w_color(agent, (0, 140, 255))
+        self.draw_agent_w_color(agent, (180, 180, 180))
 
     def draw_agent_w_color(self, agent, color):
         # print(agent.x, agent.y)
@@ -47,27 +42,6 @@ class Visualizer(Visualization):
             
             pygame.draw.circle(self.surface, color, (x, y), radius, 0)
             pygame.gfxdraw.aacircle(self.surface, x, y, radius, (50, 100, 50))
-            # corners = [(x - radius, y - radius), (x + radius, y - radius), (x + radius, y + radius), (x - radius, y + radius), (x - radius, y - radius)]
-            # pygame.gfxdraw.filled_polygon(self.surface, corners, (0, 255, 0))
-            # pygame.gfxdraw.aapolygon(self.surface, corners, (0, 100, 0))
-
-            # In case we have an ant, draw its field of vision too.
-            # Mostly for debugging purposes.
-            # if agent.id == 'ant':
-            #     directions = [(1,  0), (1, -1), ( 0, -1), (-1,  0), (-1, 1), ( 0, 1)]
-            #     if agent.current_dir == 5:
-            #         possible_dirs = [4, 5, 0]
-            #     elif agent.current_dir == 0:
-            #         possible_dirs = [5, 0, 1]
-            #     else:
-            #         possible_dirs = [agent.current_dir -1, agent.current_dir, agent.current_dir + 1]
-            #     for d in possible_dirs:
-            #         try:
-            #             cell = self.sys.ca.ca_grid[directions[d][0] + agent.x, directions[d][1] + agent.y]
-            #             pygame.gfxdraw.filled_polygon(self.surface, cell.corners, (150, 150, 150))
-            #             pygame.gfxdraw.aapolygon(self.surface, cell.corners, (255, 255, 255))
-            #         except KeyError:
-            #             pass
 
     def draw_cell(self, cell):
         """
@@ -78,11 +52,25 @@ class Visualizer(Visualization):
         :param cell:
         :return:
         """
-        green = int(255 * (cell.pheromones["hive"] / self.gc.MAX_PHEROMONE))
-        blue = int(255 * (cell.pheromones["food"] / self.gc.MAX_PHEROMONE))
-        red = int((green + blue) / 2)
+        red, green, blue = self.calculate_cell_color(cell)
 
         pygame.gfxdraw.filled_polygon(self.surface, cell.corners, (red, green, blue))
-        pygame.gfxdraw.aapolygon(self.surface, cell.corners, (255, 255, 255))
+        if self.gc.DISPLAY_GRID:
+            pygame.gfxdraw.aapolygon(self.surface, cell.corners, (255, 255, 255))
 
         return
+
+    def calculate_cell_color(self, cell):
+        if cell.max_sugar == 0:
+            normalized_su = 0
+        else:
+            normalized_su = cell.sugar / self.gc.MAX_SUGAR
+        if cell.max_spice == 0:
+            normalized_sp = 0
+        else:
+            normalized_sp = cell.spice / self.gc.MAX_SUGAR
+
+        red = 150 * normalized_sp
+        green = 200 * normalized_su
+        blue = 0
+        return red, green, blue

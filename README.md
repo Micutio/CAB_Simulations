@@ -16,7 +16,7 @@ Simple features as
 
 lead to an organic seeming behavior and lively little anthills.
 
-### Screenshot
+### Screenshots
 ![alt text](https://github.com/Micutio/CAB_Simulations/blob/master/media/ant_screenshot1.png "Foraging Ant Screenshot")
 
 
