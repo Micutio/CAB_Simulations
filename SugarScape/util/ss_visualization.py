@@ -53,11 +53,10 @@ class Visualizer(Visualization):
         :return:
         """
         red, green, blue = self.calculate_cell_color(cell)
-
+        # print(red, green, blue)
         pygame.gfxdraw.filled_polygon(self.surface, cell.corners, (red, green, blue))
         if self.gc.DISPLAY_GRID:
             pygame.gfxdraw.aapolygon(self.surface, cell.corners, (255, 255, 255))
-
         return
 
     def calculate_cell_color(self, cell):
@@ -70,7 +69,7 @@ class Visualizer(Visualization):
         else:
             normalized_sp = cell.spice / self.gc.MAX_SUGAR
 
-        red = 150 * normalized_sp
-        green = 200 * normalized_su
+        red = int(min(max(0, 150 * normalized_sp), 255))
+        green = int(min(max(0, 200 * normalized_su), 255))
         blue = 0
         return red, green, blue

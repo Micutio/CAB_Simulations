@@ -9,11 +9,12 @@ __author__ = 'Michael Wagner'
 
 from cab.cab_system import ComplexAutomaton
 
-from abm.fa_agent import HiveAgent
-from ca.fa_cell import WorldCell
-from fa_global_constants import GC
-from util.fa_io_handling import EventHandler
-from util.fa_visualization import Visualizer
+# from abm.ss_agent import HiveAgent
+from ca.ss_cell import WorldCell
+from ss_global_constants import GC
+from util.ss_io_handling import EventHandler
+from util.ss_visualization import Visualizer
+from util.ss_terrain_gen import TerrainGenerator
 
 
 if __name__ == '__main__':
@@ -24,6 +25,8 @@ if __name__ == '__main__':
     ph = EventHandler(None)
     pv = Visualizer(gc, None, None)
 
+    tg = TerrainGenerator(gc.DIM_X, gc.DIM_Y)
+    pc.set_terrain_gen(tg)
 
     # Use assets to initialize simulation system.
 

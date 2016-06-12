@@ -7,7 +7,7 @@ import math
 
 from cab.cab_global_constants import GlobalConstants
 from cab.util.cab_input_handling import InputHandler
-from abm.fa_agent import HiveAgent, FoodAgent
+from abm.ss_agent import SSAgent
 
 
 def hex_round(q, r):
@@ -68,8 +68,8 @@ class EventHandler(InputHandler):
 
     def custom_keyboard_action(self, active_key):
         if active_key == pygame.K_g:
-            self.gc.DISPLAY_GRID = not self.gc.DISPLAY_GRID
-            if self.gc.DISPLAY_GRID:
+            self.sys.gc.DISPLAY_GRID = not self.sys.gc.DISPLAY_GRID
+            if self.sys.gc.DISPLAY_GRID:
                 print('[ss_io_handling] displaying cell grid')
             else:
                 print('[ss_io_handling]h iding cell grid')

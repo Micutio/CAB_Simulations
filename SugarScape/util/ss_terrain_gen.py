@@ -5,9 +5,10 @@ Updates:
     07-11-2015: Complete rework, retrieval of all symbols and keystats
 """
 
-
 __author__ = 'Michael Wagner'
 __version__ = '1.0'
+
+import random
 
 
 class TerrainGenerator():
@@ -25,12 +26,15 @@ class TerrainGenerator():
         
         # self.landscape = self.get_coastal_landscape()
 
-    def getElevation(self, x, y):
+    def get(self, x, y):
         offset_x = int(self.x_dim / 2)
         offset_y = int(self.y_dim / 2)
         try:
+            # print('offset x: {0}, offset y:{1}, x: {2}, y: {3}'.format(offset_x, offset_y, x, y))
             return self.landscape[x + offset_x][y + offset_y]
         except KeyError:
+            return 0
+        except IndexError:
             return 0
 
     def get_coastal_landscape(self):
@@ -106,6 +110,21 @@ class TerrainGenerator():
         return l1
 
     def get_two_hill_landscape(self):
+        l1 = [[0 for _ in range(self.y_dim)] for _ in range(self.x_dim)]
+        l2 = self.thl()
+        for j in range(self.y_dim):
+            for i in range(self.x_dim):
+                i2 = int(i/2.0)
+                j2 = int(j/2.0)
+                print('indices: ', i, i2, j, j2)
+                try:
+                    l1[i][j] = l2[i2][j2]
+                except IndexError:
+                    pass
+        return l1
+    
+
+    def thl(self):
         return [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2],
 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2, 2, 2, 2, 2, 2],
 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2, 2, 2, 2],

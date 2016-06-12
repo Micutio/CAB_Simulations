@@ -30,6 +30,8 @@ class GC(GlobalConstants):
         self.GRID_WIDTH = self.DIM_X * self.CELL_SIZE
         self.GRID_HEIGHT = self.DIM_Y * self.CELL_SIZE
         self.DISPLAY_GRID = False
+        self.MAX_SUGAR = 4
+        self.MAX_SPICE = 4
         ################################
         #  SIMULATION SPEC. CONSTANTS  #
         ################################
