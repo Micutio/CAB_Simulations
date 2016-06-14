@@ -25,9 +25,6 @@ class HiveAgent(CabAgent):
             abm.add_agent(ant)
             self.spawned += 1
 
-    def clone(self):
-        return HiveAgent(x, y, gc)
-
 
 class FoodAgent(CabAgent):
     def __init__(self, x, y, gc):
@@ -134,7 +131,7 @@ class AntAgent(CabAgent):
                     backup_list.append((cell, i))
         if result_list:
             if random.random() < 0.01:
-                choice = weighted_choice(result_list)
+                choice = AntAgent.weighted_choice(result_list)
                 result = choice[0]
                 self.current_dir = choice[1]
             else:
@@ -145,7 +142,7 @@ class AntAgent(CabAgent):
             self.current_dir = choice[1]
         else:
             # print('Ant Error: no cells found to move to!')
-            self.current_dir = get_opposite_direction(self.current_dir)
+            self.current_dir = AntAgent.get_opposite_direction(self.current_dir)
             return self.get_cell_with_pheromone(target_ph, neighborhood)
         return result
 
@@ -188,19 +185,20 @@ class AntAgent(CabAgent):
                     agent.food -= self.food
                     self.has_food = True
 
+    @staticmethod
+    def weighted_choice(choices):
+        total = sum(w for c, w, i in choices)
+        r = random.uniform(0, total)
+        up_to = 0
+        for c, w, i in choices:
+            if up_to + w > r:
+                return c, i
+            up_to += w
+        assert False, "Shouldn't get here"
 
-def weighted_choice(choices):
-    total = sum(w for c, w, i in choices)
-    r = random.uniform(0, total)
-    up_to = 0
-    for c, w, i in choices:
-        if up_to + w > r:
-            return c, i
-        up_to += w
-    assert False, "Shouldn't get here"
-
-def get_opposite_direction(number):
-    if number < 3:
-        return number + 3
-    else:
-        return number - 3
+    @staticmethod
+    def get_opposite_direction(number):
+        if number < 3:
+            return number + 3
+        else:
+            return number - 3
