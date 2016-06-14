@@ -15,14 +15,14 @@ class TerrainGenerator():
     def __init__(self, x_dim, y_dim):
         self.x_dim = x_dim * 2
         self.y_dim = y_dim * 2
-        self.highest = 20
-        self.deepest = -20
+        self.highest = 4
+        self.deepest = -15
         self.slope = 1.0
         self.smoothness = 2
         self.water_level = 0
         self.landscape = None
         self.factor = 10
-        self.landscape = self.get_island_landscape()
+        self.landscape = self.get_coastal_landscape()
         
         # self.landscape = self.get_coastal_landscape()
 
@@ -111,7 +111,7 @@ class TerrainGenerator():
 
     def get_two_hill_landscape(self):
         l1 = [[0 for _ in range(self.y_dim)] for _ in range(self.x_dim)]
-        l2 = self.thl()
+        l2 = TerrainGenerator.two_hill_landscape()
         for j in range(self.y_dim):
             for i in range(self.x_dim):
                 i2 = int(i/2.0)
@@ -123,8 +123,8 @@ class TerrainGenerator():
                     pass
         return l1
     
-
-    def thl(self):
+    @staticmethod
+    def two_hill_landscape(self):
         return [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2],
 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2, 2, 2, 2, 2, 2],
 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2, 2, 2, 2],
