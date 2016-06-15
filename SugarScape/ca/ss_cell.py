@@ -35,4 +35,7 @@ class WorldCell(CellHex):
         pass
 
     def update(self):
-        pass
+        if self.sugar < self.max_sugar:
+            self.sugar += 1
+        if self.spice < self.max_spice:
+            self.spuce += 1
