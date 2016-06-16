@@ -18,7 +18,6 @@ class HiveAgent(CabAgent):
         self.dead = False
         self.spawned = 0
         
-
     def perceive_and_act(self, ca, abm):
         if self.spawned < self.max_ants:
             ant = AntAgent(self.x, self.y, self.gc)
@@ -62,6 +61,7 @@ class AntAgent(CabAgent):
         self.prev_x = self.x
         self.prev_y = self.y
         neighborhood = ca.get_agent_neighborhood(abm.agent_locations, self.x, self.y, 1)
+        print(neighborhood)
 
         self.forage(neighborhood)
 

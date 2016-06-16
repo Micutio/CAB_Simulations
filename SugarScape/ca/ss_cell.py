@@ -18,6 +18,8 @@ class WorldCell(CellHex):
         self.spice = 0
         self.max_sugar = 0
         self.max_spice = 0
+        self.growth_cycle = 3
+        self.growth_cycle_count = 0
 
     def set_terrain_gen(self, tg):
         self.t_gen = tg
@@ -35,7 +37,11 @@ class WorldCell(CellHex):
         pass
 
     def update(self):
-        if self.sugar < self.max_sugar:
-            self.sugar += 1
-        if self.spice < self.max_spice:
-            self.spuce += 1
+        if self.growth_cycle_count == self.growth_cycle:
+            if self.sugar < self.max_sugar:
+                self.sugar += 1
+            if self.spice < self.max_spice:
+                self.spuce += 1
+            self.growth_cycle_count = 0
+        else:
+            self.growth_cycle_count += 1

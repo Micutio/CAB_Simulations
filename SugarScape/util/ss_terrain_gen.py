@@ -15,8 +15,8 @@ class TerrainGenerator():
     def __init__(self, x_dim, y_dim):
         self.x_dim = x_dim * 2
         self.y_dim = y_dim * 2
-        self.highest = 4
-        self.deepest = -15
+        self.highest = 0
+        self.deepest = -20
         self.slope = 1.0
         self.smoothness = 2
         self.water_level = 0
@@ -124,7 +124,7 @@ class TerrainGenerator():
         return l1
     
     @staticmethod
-    def two_hill_landscape(self):
+    def two_hill_landscape():
         return [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2],
 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2, 2, 2, 2, 2, 2],
 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2, 2, 2, 2],

@@ -19,7 +19,7 @@ class GC(GlobalConstants):
         #        ABM CONSTANTS         #
         ################################
         self.START_AGENTS = 20
-        self.VISION = 3
+        self.VISION = 1
         ################################
         #         CA CONSTANTS         #
         ################################
