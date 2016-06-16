@@ -56,7 +56,9 @@ class Visualizer(Visualization):
         # print(red, green, blue)
         pygame.gfxdraw.filled_polygon(self.surface, cell.corners, (red, green, blue))
         if self.gc.DISPLAY_GRID:
-            pygame.gfxdraw.aapolygon(self.surface, cell.corners, (255, 255, 255))
+            pygame.gfxdraw.aapolygon(self.surface, cell.corners, (190, 190, 190))
+        else:
+            pygame.gfxdraw.aapolygon(self.surface, cell.corners, (red, green, blue))
         return
 
     @staticmethod

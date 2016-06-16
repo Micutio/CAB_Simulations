@@ -61,7 +61,6 @@ class AntAgent(CabAgent):
         self.prev_x = self.x
         self.prev_y = self.y
         neighborhood = ca.get_agent_neighborhood(abm.agent_locations, self.x, self.y, 1)
-        print(neighborhood)
 
         self.forage(neighborhood)
 
