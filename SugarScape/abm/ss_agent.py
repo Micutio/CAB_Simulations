@@ -38,8 +38,10 @@ class SSAgent(CabAgent):
     def __init__(self, x, y, gc):
         super().__init__(x, y, gc)
         self.vision = gc.VISION
+        self.sugar = 20
+        self.spice = 20
         self.meta_sugar = gc.METABOLISM_SUGAR
-        self.meta_spice = gc.METABOLISM_spice
+        self.meta_spice = gc.METABOLISM_SPICE
 
     def perceive_and_act(self, ca, abm):
         best_cell = self.select_best_cell(ca, abm)
@@ -58,22 +60,23 @@ class SSAgent(CabAgent):
         # Find cells with the highest possible reward.
         # TODO: check if distance calculation is correct for hex grids
         for v in list(neighborhood.values()):
+            cell = v[0]
             if not best_cells:
-                best_cells = [v[0]]
-                max_w = self.welfare(v[0].sugar + occupant_sugar, v[0].spice + occupant_spice)
-                max_dist = (abs(v[0].x - self.x) + abs(v[0].y - self.y))
+                best_cells = [cell]
+                max_w = self.welfare(cell.sugar, cell.spice)
+                max_dist = (abs(cell.x - self.x) + abs(cell.y - self.y))
             else:
-                dist = (abs(v[0].x - self.x) + abs(v[0].y - self.y))
-                welfare = self.welfare(v[0].sugar, v[0].spice)
+                dist = (abs(cell.x - self.x) + abs(cell.y - self.y))
+                welfare = self.welfare(cell.sugar, cell.spice)
                 if welfare > max_w:
-                    best_cells = [v]
+                    best_cells = [cell]
                     max_w = welfare
                     max_dist = dist
                 elif welfare == max_w and dist < max_dist:
-                    best_cells = [v]
+                    best_cells = [cell]
                     max_dist = dist
                 elif welfare == max_w and dist == max_dist:
-                    best_cells.append(v)
+                    best_cells.append(cell)
 
         return random.choice(best_cells)
 
@@ -86,9 +89,11 @@ class SSAgent(CabAgent):
         :param sp: potential spice gain of cell in question.
         :return: welfare value, important to calculate prices in the trading rule.
         """
+        gain_sugar = max(self.sugar + su, 0)
+        gain_spice = max(self.spice + sp, 0)
         meta_total = self.meta_sugar + self.meta_spice
-        w1 = math.pow((self.sugar + su), (self.meta_sugar / meta_total))
-        w2 = math.pow((self.spice + sp), (self.meta_spice / meta_total))
+        w1 = math.pow(gain_sugar, (self.meta_sugar / meta_total))
+        w2 = math.pow(gain_spice, (self.meta_spice / meta_total))
         return w1 * w2
 
     def mrs(self, su, sp):
@@ -113,4 +118,9 @@ class SSAgent(CabAgent):
         self.y = target_c.y
 
     def eat_from(self, cell):
+        self.sugar += cell.sugar
+        self.spice += cell.spice
         cell.sugar = 0
+        cell.spice = 0
+        self.sugar -= self.meta_sugar
+        self.spice -= self.meta_spice

@@ -41,7 +41,7 @@ class WorldCell(CellHex):
             if self.sugar < self.max_sugar:
                 self.sugar += 1
             if self.spice < self.max_spice:
-                self.spuce += 1
+                self.spice += 1
             self.growth_cycle_count = 0
         else:
             self.growth_cycle_count += 1

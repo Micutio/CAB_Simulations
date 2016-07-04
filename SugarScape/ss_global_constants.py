@@ -20,6 +20,8 @@ class GC(GlobalConstants):
         ################################
         self.START_AGENTS = 20
         self.VISION = 1
+        self.METABOLISM_SUGAR = 2
+        self.METABOLISM_SPICE = 2
         ################################
         #         CA CONSTANTS         #
         ################################
