@@ -44,11 +44,11 @@ class SSAgent(CabAgent):
         self.meta_spice = gc.METABOLISM_SPICE
 
     def perceive_and_act(self, ca, abm):
-        best_cell = self.select_best_cell(ca, abm)
+        best_cell = self.r1_select_best_cell(ca, abm)
         self.move_to(best_cell)
         self.eat_from(best_cell)
 
-    def select_best_cell(self, ca, abm):
+    def r1_select_best_cell(self, ca, abm):
         """
         Agent selects the best cell to move to, according to: its resources, occupier and tribal alignment.
         """
@@ -67,6 +67,7 @@ class SSAgent(CabAgent):
                 max_dist = (abs(cell.x - self.x) + abs(cell.y - self.y))
             else:
                 dist = (abs(cell.x - self.x) + abs(cell.y - self.y))
+                dist = ca.hex_distance(self.x, self.y, cell.q, cell.r)
                 welfare = self.welfare(cell.sugar, cell.spice)
                 if welfare > max_w:
                     best_cells = [cell]
