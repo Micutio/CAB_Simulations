@@ -18,8 +18,8 @@ class GC(GlobalConstants):
         ################################
         #        ABM CONSTANTS         #
         ################################
-        self.START_AGENTS = 20
-        self.VISION = 1
+        self.START_AGENTS = 1
+        self.VISION = 2
         self.METABOLISM_SUGAR = 2
         self.METABOLISM_SPICE = 2
         ################################

@@ -8,6 +8,7 @@ import operator
 
 from cab.cab_global_constants import GlobalConstants
 from cab.abm.cab_agent import CabAgent
+from cab.ca.cab_ca_hex import CAHex
 
 
 class SSAgentManager(CabAgent):
@@ -78,8 +79,12 @@ class SSAgent(CabAgent):
                     max_dist = dist
                 elif welfare == max_w and dist == max_dist:
                     best_cells.append(cell)
-
-        return random.choice(best_cells)
+        result_cell = random.choice(best_cells)
+        # if self.vision > 1:
+        #     _q, _r = CAHex.get_cell_in_direction(ca.ca_grid[self.x, self.y], result_cell)
+        #     return ca.ca_grid[_q, _r]
+        # else:
+        return result_cell
 
     def welfare(self, su, sp):
         """
