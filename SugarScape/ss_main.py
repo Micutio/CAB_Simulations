@@ -10,7 +10,7 @@ __author__ = 'Michael Wagner'
 from cab.cab_system import ComplexAutomaton
 
 # from abm.ss_agent import HiveAgent
-from abm.ss_agent import SSAgentManager
+from abm.ss_agent_manager import SSAgentManager
 from ca.ss_cell import WorldCell
 from ss_global_constants import GC
 from util.ss_io_handling import EventHandler
