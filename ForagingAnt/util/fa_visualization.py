@@ -78,9 +78,9 @@ class Visualizer(Visualization):
         :param cell:
         :return:
         """
-        green = int(255 * (cell.pheromones["hive"] / self.gc.MAX_PHEROMONE))
-        blue = int(255 * (cell.pheromones["food"] / self.gc.MAX_PHEROMONE))
-        red = int((green + blue) / 2)
+        green = 42 + int(213 * (cell.pheromones["hive"] / self.gc.MAX_PHEROMONE))
+        blue = 48 + int(207 * (cell.pheromones["food"] / self.gc.MAX_PHEROMONE))
+        red = 34 #+ int((green + blue) / 2)
 
         pygame.gfxdraw.filled_polygon(self.surface, cell.corners, (red, green, blue))
         if self.gc.DISPLAY_GRID:
