@@ -18,10 +18,9 @@ if __name__ == '__main__':
 
     gc = GC()
     pc = WorldCell(0, 0, gc)
-    #pa = HiveAgent(0, 0, gc)
+    pa = HiveAgent(0, 0, gc)
     ph = EventHandler(None)
     pv = Visualizer(gc, None, None)
-
 
     # Use assets to initialize simulation system.
 
