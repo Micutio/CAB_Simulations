@@ -2,7 +2,6 @@
 Module containing the cell definition for the ant world.
 """
 
-from cab.cab_global_constants import GlobalConstants
 from cab.ca.cab_cell import CellHex
 
 __author__ = 'Michael Wagner'
@@ -27,10 +26,8 @@ class WorldCell(CellHex):
         self.neighbor_max_pheromone = {"hive": 0, "food": 0}
         self.last_neighbor_max_pheromone = {"hive": 0, "food": 0}
 
-
-    def clone(self, x, y, gc):
+    def clone(self, x, y):
         return WorldCell(x, y, self.gc)
-
 
     def sense_neighborhood(self):
         for n in self.neighbors:

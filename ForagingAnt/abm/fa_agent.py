@@ -1,12 +1,10 @@
+import random
+
+from cab.abm.cab_agent import CabAgent
+
+
 __author__ = 'Michael Wagner'
 __version__ = '1.0'
-
-import random
-import uuid
-import math
-
-from cab.cab_global_constants import GlobalConstants
-from cab.abm.cab_agent import CabAgent
 
 
 class HiveAgent(CabAgent):
