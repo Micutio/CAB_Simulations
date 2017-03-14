@@ -1,15 +1,14 @@
-import pygame
-import math
-from cab.util.cab_visualization import Visualization
-
-
 __author__ = 'Michael Wagner'
 __version__ = '1.0'
 
+import pygame
+import math
+from cab.cab_global_constants import GlobalConstants
+from cab.util.cab_visualization import Visualization
 
 class Visualizer(Visualization):
     """
-    This class incorporates all methods necessary for visualizing the urban development simulation.
+    This class incorporates all methods necessary for visualizing the simulation.
     """
 
     def __init__(self, gc, surface, sys):
@@ -23,8 +22,8 @@ class Visualizer(Visualization):
         self.draw_cell_mode = 1
         self.gc = gc
 
-    def clone(self, surface, cab_sys):
-        return Visualizer(self.gc, surface, cab_sys)
+    def clone(self, gc, surface, cab_sys):
+        return Visualizer(gc, surface, cab_sys)
 
     def draw_agent(self, agent):
         if agent.id == 'hive':
@@ -36,7 +35,7 @@ class Visualizer(Visualization):
 
     def draw_agent_w_color(self, agent, color):
         # print(agent.x, agent.y)
-        if agent.x is not None and agent.y is not None and not agent.dead:
+        if agent.x != None and agent.y != None and not agent.dead:
             radius = int(agent.size / 1.5)
 
             horiz = self.gc.CELL_SIZE * 2 * (math.sqrt(3) / 2)
@@ -48,6 +47,27 @@ class Visualizer(Visualization):
             
             pygame.draw.circle(self.surface, color, (x, y), radius, 0)
             pygame.gfxdraw.aacircle(self.surface, x, y, radius, (50, 100, 50))
+            # corners = [(x - radius, y - radius), (x + radius, y - radius), (x + radius, y + radius), (x - radius, y + radius), (x - radius, y - radius)]
+            # pygame.gfxdraw.filled_polygon(self.surface, corners, (0, 255, 0))
+            # pygame.gfxdraw.aapolygon(self.surface, corners, (0, 100, 0))
+
+            # In case we have an ant, draw its field of vision too.
+            # Mostly for debugging purposes.
+            # if agent.id == 'ant':
+            #     directions = [(1,  0), (1, -1), ( 0, -1), (-1,  0), (-1, 1), ( 0, 1)]
+            #     if agent.current_dir == 5:
+            #         possible_dirs = [4, 5, 0]
+            #     elif agent.current_dir == 0:
+            #         possible_dirs = [5, 0, 1]
+            #     else:
+            #         possible_dirs = [agent.current_dir -1, agent.current_dir, agent.current_dir + 1]
+            #     for d in possible_dirs:
+            #         try:
+            #             cell = self.sys.ca.ca_grid[directions[d][0] + agent.x, directions[d][1] + agent.y]
+            #             pygame.gfxdraw.filled_polygon(self.surface, cell.corners, (150, 150, 150))
+            #             pygame.gfxdraw.aapolygon(self.surface, cell.corners, (255, 255, 255))
+            #         except KeyError:
+            #             pass
 
     def draw_cell(self, cell):
         """
