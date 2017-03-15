@@ -1,13 +1,11 @@
-__author__ = 'Michael Wagner'
-__version__ = '1.0'
-
 import pygame
-import sys
 import math
 
-from cab.cab_global_constants import GlobalConstants
 from cab.util.cab_input_handling import InputHandler
 from abm.fa_agent import HiveAgent, FoodAgent
+
+__author__ = 'Michael Wagner'
+__version__ = '1.0'
 
 
 class EventHandler(InputHandler):
@@ -18,8 +16,8 @@ class EventHandler(InputHandler):
         return EventHandler(cab_sys)
 
     def get_mouse_hex_coords(self):
-        _q = (self.mx * math.sqrt(3)/3 - self.my/3)# / self.sys.gc.CELL_SIZE
-        _r = self.my * 2/3# / self.sys.gc.CELL_SIZE
+        _q = (self.mx * math.sqrt(3) / 3 - self.my / 3)  # / self.sys.gc.CELL_SIZE
+        _r = self.my * 2 / 3  # / self.sys.gc.CELL_SIZE
         cell_q, cell_r = EventHandler.hex_round(_q, _r)
         return cell_q, cell_r
 
@@ -29,7 +27,7 @@ class EventHandler(InputHandler):
             if self.sys.gc.DISPLAY_GRID:
                 print('[ss_io_handling] displaying cell grid')
             else:
-                print('[ss_io_handling]h iding cell grid')
+                print('[ss_io_handling] hiding cell grid')
 
     def custom_mouse_action(self, button):
         # Click on left mouse button.

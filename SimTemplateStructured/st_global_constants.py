@@ -5,7 +5,7 @@ __author__ = 'Michael Wagner'
 __version__ = '1.0'
 
 
-class GC(GlobalConstants):
+class ExampleGC(GlobalConstants):
     """
     Class containing constant declarations that are available to all components of the simulation.
     """
