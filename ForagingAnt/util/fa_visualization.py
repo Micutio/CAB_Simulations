@@ -1,10 +1,11 @@
+import pygame
+import math
+from cab.util.cab_visualization import Visualization
+
+
 __author__ = 'Michael Wagner'
 __version__ = '1.0'
 
-import pygame
-import math
-from cab.cab_global_constants import GlobalConstants
-from cab.util.cab_visualization import Visualization
 
 class Visualizer(Visualization):
     """
@@ -22,8 +23,8 @@ class Visualizer(Visualization):
         self.draw_cell_mode = 1
         self.gc = gc
 
-    def clone(self, gc, surface, cab_sys):
-        return Visualizer(gc, surface, cab_sys)
+    def clone(self, surface, cab_sys):
+        return Visualizer(self.gc, surface, cab_sys)
 
     def draw_agent(self, agent):
         if agent.id == 'hive':
@@ -35,7 +36,8 @@ class Visualizer(Visualization):
 
     def draw_agent_w_color(self, agent, color):
         # print(agent.x, agent.y)
-        if agent.x != None and agent.y != None and not agent.dead:
+        if agent.x is not None and agent.y is not None and not agent.dead:
+            print('drawing agent {0}'.format(agent))
             radius = int(agent.size / 1.5)
 
             horiz = self.gc.CELL_SIZE * 2 * (math.sqrt(3) / 2)
@@ -47,7 +49,11 @@ class Visualizer(Visualization):
             
             pygame.draw.circle(self.surface, color, (x, y), radius, 0)
             pygame.gfxdraw.aacircle(self.surface, x, y, radius, (50, 100, 50))
-            # corners = [(x - radius, y - radius), (x + radius, y - radius), (x + radius, y + radius), (x - radius, y + radius), (x - radius, y - radius)]
+            # corners = [(x - radius, y - radius),
+            #            (x + radius, y - radius),
+            #            (x + radius, y + radius),
+            #            (x - radius, y + radius),
+            #            (x - radius, y - radius)]
             # pygame.gfxdraw.filled_polygon(self.surface, corners, (0, 255, 0))
             # pygame.gfxdraw.aapolygon(self.surface, corners, (0, 100, 0))
 
@@ -80,13 +86,11 @@ class Visualizer(Visualization):
         """
         green = 42 + int(213 * (cell.pheromones["hive"] / self.gc.MAX_PHEROMONE))
         blue = 48 + int(207 * (cell.pheromones["food"] / self.gc.MAX_PHEROMONE))
-        red = 34 #+ int((green + blue) / 2)
+        red = 34  # + int((green + blue) / 2)
 
         pygame.gfxdraw.filled_polygon(self.surface, cell.corners, (red, green, blue))
         if self.gc.DISPLAY_GRID:
             pygame.gfxdraw.aapolygon(self.surface, cell.corners, (190, 190, 190))
         else:
             pygame.gfxdraw.aapolygon(self.surface, cell.corners, (red, green, blue))
-        return
-
         return

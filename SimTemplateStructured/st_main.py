@@ -2,14 +2,14 @@
 Main module of the foraging ant simulation.
 """
 
-# Import the Complex Automaton simulation system.
+# CAB system imports.
 from cab.cab_system import ComplexAutomaton
 
-# Import all customized simulation components.
+# Internal Simulation System component imports.
 from st_global_constants import ExampleGC
 from ca.st_cell import ExampleCell
 from abm.st_agent import ExampleAgent
-from util.st_io_handling import ExampleEventHandler
+from util.st_io_handling import ExampleInputHandler
 from util.st_visualization import ExampleVisualizer
 
 
@@ -26,7 +26,7 @@ if __name__ == '__main__':
     gc = ExampleGC()
     pc = ExampleCell(0, 0, gc)
     pa = ExampleAgent(0, 0, gc)
-    ph = ExampleEventHandler(None)
+    ph = ExampleInputHandler(None)
     pv = ExampleVisualizer(gc, None, None)
 
     # 2. initialize the complex automaton system with the components

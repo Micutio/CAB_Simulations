@@ -3,17 +3,20 @@ Main module of the Gol and Pressure Demo.
 Uses the Complex Automaton Base.
 """
 
+# External library imports.
+import pygame
+import random
+
+# CAB system imports.
 from cab.ca.cab_cell import CellHex
 from cab.cab_global_constants import GlobalConstants
 from cab.cab_system import ComplexAutomaton
 from cab.util.cab_input_handling import InputHandler
 from cab.util.cab_visualization import Visualization
 
-import pygame
-import math
-import random
 
 __author__ = 'Michael Wagner'
+__version__ = '1.0'
 
 
 class GC(GlobalConstants):
@@ -45,8 +48,8 @@ class GC(GlobalConstants):
 
 
 class GolCell(CellHex):
-    def __init__(self, x, y, c_size, c):
-        super().__init__(x, y, c_size, c)
+    def __init__(self, x, y, global_constants):
+        super().__init__(x, y, global_constants)
         self.alive = 0
         self.next_state = 0
         # The rules:
@@ -82,20 +85,11 @@ class GolIO(InputHandler):
     def clone(self, cab_sys):
         return GolIO(cab_sys)
 
-    def get_mouse_hex_coords(self):
-        _q = (self.mx * math.sqrt(3)/3 - self.my/3)  # / self.sys.gc.CELL_SIZE
-        _r = self.my * 2/3  # / self.sys.gc.CELL_SIZE
-        cell_q, cell_r = hex_round(_q, _r)
-        return cell_q, cell_r
-
     def custom_mouse_action(self, button):
         # Click on left mouse button.
         if button == 1:
             cell_x, cell_y = self.get_mouse_hex_coords()
             self.sys.ca.ca_grid[cell_x, cell_y].alive = 1 - self.sys.ca.ca_grid[cell_x, cell_y].alive
-
-        # Click on middle mouse button / mouse wheel. Not used here.
-        # elif button == 2:
 
         # Click on right mouse button
         elif button == 3:
@@ -135,42 +129,13 @@ class GolVis(Visualization):
                 pygame.gfxdraw.aapolygon(self.surface, cell.get_corners(), (190, 190, 190))
 
 
-def hex_round(q, r):
-    return cube_to_hex(*cube_round(*hex_to_cube(q, r)))
-
-
-def cube_round(x, y, z):
-    rx = round(x)
-    ry = round(y)
-    rz = round(z)
-    dx = abs(rx - x)
-    dy = abs(ry - y)
-    dz = abs(rz - z)
-
-    if dx > dy and dx > dz:
-        rx = -ry - rz
-    elif dy > dz:
-        ry = -rx - rz
-    else:
-        rz = -rx - ry
-
-    return rx, ry, rz
-
-
-def cube_to_hex(x, y, z):
-    return x, y
-
-
-def hex_to_cube(q, r):
-    z = -q - r
-    return q, r, z
-
-
 if __name__ == '__main__':
     gc = GC()
-    pc = GolCell(0, 0, 0, gc)
+    pc = GolCell(0, 0, gc)
     ph = GolIO(None)
-    pv = GolVis(gc, None)
+    pv = GolVis(gc, None, None)
     simulation = ComplexAutomaton(gc, proto_cell=pc, proto_handler=ph, proto_visualizer=pv)
     simulation.run_main_loop()
+
+    # Just in case we need to run the simulation in debug mode.
     # cProfile.run("simulation.run_main_loop()")

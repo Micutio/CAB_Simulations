@@ -3,17 +3,20 @@ Main module of the Gol and Pressure Demo.
 Uses the Complex Automaton Base.
 """
 
+# External library imports.
+import pygame
+import random
+
+# CAB system imports.
 from cab.ca.cab_cell import CellRect
 from cab.cab_global_constants import GlobalConstants
 from cab.cab_system import ComplexAutomaton
 from cab.util.cab_input_handling import InputHandler
 from cab.util.cab_visualization import Visualization
 
-import pygame
-import math
-import random
 
 __author__ = 'Michael Wagner'
+__version__ = '1.0'
 
 
 class GC(GlobalConstants):
@@ -82,12 +85,6 @@ class GolIO(InputHandler):
     def clone(self, cab_sys):
         return GolIO(cab_sys)
 
-    def get_mouse_hex_coords(self):
-        _q = (self.mx * math.sqrt(3)/3 - self.my/3)  # / self.sys.gc.CELL_SIZE
-        _r = self.my * 2/3  # / self.sys.gc.CELL_SIZE
-        cell_q, cell_r = hex_round(_q, _r)
-        return cell_q, cell_r
-
     def custom_mouse_action(self, button):
         # Click on left mouse button.
         if button == 1:
@@ -133,37 +130,6 @@ class GolVis(Visualization):
                     blue = 255
                 pygame.gfxdraw.filled_polygon(self.surface, cell.get_corners(), (red, green, blue))
                 pygame.gfxdraw.aapolygon(self.surface, cell.get_corners(), (190, 190, 190))
-
-
-def hex_round(q, r):
-    return cube_to_hex(*cube_round(*hex_to_cube(q, r)))
-
-
-def cube_round(x, y, z):
-    rx = round(x)
-    ry = round(y)
-    rz = round(z)
-    dx = abs(rx - x)
-    dy = abs(ry - y)
-    dz = abs(rz - z)
-
-    if dx > dy and dx > dz:
-        rx = -ry - rz
-    elif dy > dz:
-        ry = -rx - rz
-    else:
-        rz = -rx - ry
-
-    return rx, ry, rz
-
-
-def cube_to_hex(x, y, z):
-    return x, y
-
-
-def hex_to_cube(q, r):
-    z = -q - r
-    return q, r, z
 
 
 if __name__ == '__main__':

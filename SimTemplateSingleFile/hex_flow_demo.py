@@ -3,17 +3,21 @@ Main module of the Flow and Pressure Demo.
 Uses the Complex Automaton Base.
 """
 
+
+# External library imports.
+import pygame
+import numpy
+
+# CAB system imports.
 from cab.ca.cab_cell import CellHex
 from cab.cab_global_constants import GlobalConstants
 from cab.cab_system import ComplexAutomaton
 from cab.util.cab_input_handling import InputHandler
 from cab.util.cab_visualization import Visualization
 
-import pygame
-import numpy
-import math
 
 __author__ = 'Michael Wagner'
+__version__ = '1.0'
 
 
 class GC(GlobalConstants):
@@ -44,8 +48,8 @@ class GC(GlobalConstants):
 
 
 class FlowCell(CellHex):
-    def __init__(self, x, y, c_size, c):
-        super().__init__(x, y, c_size, c)
+    def __init__(self, x, y, c):
+        super().__init__(x, y, c)
         self.pressure = 10
         self.new_pressure = 10
         self.flow = 1
@@ -86,12 +90,6 @@ class FlowIO(InputHandler):
 
     def clone(self, cab_sys):
         return FlowIO(cab_sys)
-
-    def get_mouse_hex_coords(self):
-        _q = (self.mx * math.sqrt(3)/3 - self.my/3)  # / self.sys.gc.CELL_SIZE
-        _r = self.my * 2/3  # / self.sys.gc.CELL_SIZE
-        cell_q, cell_r = hex_round(_q, _r)
-        return cell_q, cell_r
 
     def custom_mouse_action(self, button):
         # Click on left mouse button.
@@ -162,42 +160,11 @@ class FlowVis(Visualization):
         pygame.gfxdraw.filled_polygon(self.surface, crnrs, (60, 200, 0))
 
 
-def hex_round(q, r):
-    return cube_to_hex(*cube_round(*hex_to_cube(q, r)))
-
-
-def cube_round(x, y, z):
-    rx = round(x)
-    ry = round(y)
-    rz = round(z)
-    dx = abs(rx - x)
-    dy = abs(ry - y)
-    dz = abs(rz - z)
-
-    if dx > dy and dx > dz:
-        rx = -ry - rz
-    elif dy > dz:
-        ry = -rx - rz
-    else:
-        rz = -rx - ry
-
-    return rx, ry, rz
-
-
-def cube_to_hex(x, y, z):
-    return x, y
-
-
-def hex_to_cube(q, r):
-    z = -q - r
-    return q, r, z
-
-
 if __name__ == '__main__':
     gc = GC()
-    pc = FlowCell(0, 0, 0, gc)
+    pc = FlowCell(0, 0, gc)
     ph = FlowIO(None)
-    pv = FlowVis(gc, None)
+    pv = FlowVis(gc, None, None)
     simulation = ComplexAutomaton(gc, proto_cell=pc, proto_handler=ph, proto_visualizer=pv)
     simulation.run_main_loop()
     # cProfile.run("simulation.run_main_loop()")

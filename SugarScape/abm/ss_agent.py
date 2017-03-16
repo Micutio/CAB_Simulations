@@ -1,17 +1,15 @@
+import copy
+import random
+import math
+
+from cab.abm.cab_agent import CabAgent
+
+from abm.ss_genetics import Chromosome
+
+
 __author__ = 'Michael Wagner'
 __version__ = '1.0'
 
-import random
-import uuid
-import math
-import operator
-
-from cab.cab_global_constants import GlobalConstants
-from cab.abm.cab_agent import CabAgent
-from cab.ca.cab_ca_hex import CAHex
-
-from abm.ss_agent_manager import AgentManager
-from abm.ss_genetics import Chromosome
 
 class SSAgent(CabAgent):
     def __init__(self, x, y, gc, su, sp, age, genomes):
@@ -154,7 +152,7 @@ class SSAgent(CabAgent):
                     # Fuse mommy's and daddy's chromosomes to create Juniors attributes.
                     # This is the actual creation of the baby. Behold the wonders of nature!
                     n_chromosome = self.chromosome.merge_with(m.chromosome)
-                    child = Agent(n_x, n_y, n_s, n_su, n_sp, n_chromosome, 0, self.tribe)
+                    child = SSAgent(n_x, n_y, n_s, n_su, n_sp, n_chromosome, 0)
                     # Give the parents a reference to their newborn so they can,
                     # inherit their wealth to it before their inevitable demise.
                     self.children.append(child)
@@ -170,7 +168,7 @@ class SSAgent(CabAgent):
         trade_count = 0
         self.sugar_price = 0
         self.spice_price = 0
-        for n in neighbors:
+        for n in self.neighbors:
             if not n[1]is None and not n[1].dead and not self.dead and n[1].sugar > 0 and n[1].spice > 0:
                 m1_now = self.mrs(0, 0)
                 m2_now = n[1].mrs(0, 0)
@@ -226,11 +224,11 @@ class SSAgent(CabAgent):
                                 self.spice_price += abs(1 / price)
                                 trade_count += 1
                                 # 2.) wealth change between tribes, if occurred
-                                if self.tribe_id != n[1].tribe_id:
-                                    my_wealth_change = my_sugar_delta + my_spice_delta
-                                    neigh_wealth_change = neigh_spice_delta + neigh_sugar_delta
-                                    self.tribe.tribal_wealth[self.tribe_id] += my_wealth_change
-                                    self.tribe.tribal_wealth[n[1].tribe_id] += neigh_wealth_change
+                                # if self.tribe_id != n[1].tribe_id:
+                                #     my_wealth_change = my_sugar_delta + my_spice_delta
+                                #     neigh_wealth_change = neigh_spice_delta + neigh_sugar_delta
+                                #     self.tribe.tribal_wealth[self.tribe_id] += my_wealth_change
+                                #     self.tribe.tribal_wealth[n[1].tribe_id] += neigh_wealth_change
                             else:
                                 mrs_diff = 0
                         else:
@@ -251,7 +249,7 @@ class SSAgent(CabAgent):
         #        for _, d in self.diseases.items():
         #            d.spread(n[1])
         for _, d in self.diseases.items():
-            targets = [agent for (cell, agent) in neighbors if not agent is None and not agent.dead and not self.dead]
+            targets = [agent for (cell, agent) in neighbors if is not agent is None and not agent.dead and not self.dead]
             if targets:
                 victim = random.choice(targets)
                 d.spread(victim)

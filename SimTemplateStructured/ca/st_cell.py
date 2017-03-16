@@ -1,7 +1,8 @@
 """
-Module containing the cell definition for the ant world.
+Module containing the example cell definition.
 """
 
+# Internal library imports.
 from cab.ca.cab_cell import CellHex
 
 __author__ = 'Michael Wagner'
