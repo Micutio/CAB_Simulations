@@ -35,9 +35,7 @@ class Visualizer(Visualization):
             self.draw_agent_w_color(agent, (0, 140, 255))
 
     def draw_agent_w_color(self, agent, color):
-        # print(agent.x, agent.y)
         if agent.x is not None and agent.y is not None and not agent.dead:
-            print('drawing agent {0}'.format(agent))
             radius = int(agent.size / 1.5)
 
             horiz = self.gc.CELL_SIZE * 2 * (math.sqrt(3) / 2)
