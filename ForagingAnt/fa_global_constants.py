@@ -14,7 +14,7 @@ class GC(GlobalConstants):
         ################################
         self.RUN_SIMULATION = False
         self.TIME_STEP = 0
-        self.ONE_AGENT_PER_CELL = False
+        self.ONE_AGENT_PER_CELL = True
         ################################
         #        ABM CONSTANTS         #
         ################################
@@ -36,5 +36,5 @@ class GC(GlobalConstants):
         self.MAX_ANTS = 25
         self.MAX_PHEROMONE = 100
         self.MAX_FOOD = 100
-        self.DIFFUSION = 0.001
-        self.EVAPORATION = 0.001
+        self.DIFFUSION = 0.01
+        self.EVAPORATION = 0.01

@@ -34,8 +34,8 @@ class GC(GlobalConstants):
         self.USE_HEX_CA = False
         self.USE_MOORE_NEIGHBORHOOD = True
         self.USE_CA_BORDERS = True
-        self.DIM_X = 50  # How many cells is the ca wide?
-        self.DIM_Y = 50  # How many cells is the ca high?
+        self.DIM_X = 100  # How many cells is the ca wide?
+        self.DIM_Y = 100  # How many cells is the ca high?
         self.CELL_SIZE = 10  # How long/wide is one cell?
         self.GRID_WIDTH = self.DIM_X * self.CELL_SIZE
         self.GRID_HEIGHT = self.DIM_Y * self.CELL_SIZE
@@ -88,7 +88,7 @@ class GolIO(InputHandler):
     def custom_mouse_action(self, button):
         # Click on left mouse button.
         if button == 1:
-            cell_x, cell_y = self.get_mouse_hex_coords()
+            cell_x, cell_y = self.get_mouse_rect_coords()
             self.sys.ca.ca_grid[cell_x, cell_y].alive = 1 - self.sys.ca.ca_grid[cell_x, cell_y].alive
 
         # Click on middle mouse button / mouse wheel, not used here
@@ -129,7 +129,7 @@ class GolVis(Visualization):
                     green = 255
                     blue = 255
                 pygame.gfxdraw.filled_polygon(self.surface, cell.get_corners(), (red, green, blue))
-                pygame.gfxdraw.aapolygon(self.surface, cell.get_corners(), (190, 190, 190))
+                pygame.gfxdraw.polygon(self.surface, cell.get_corners(), (190, 190, 190))
 
 
 if __name__ == '__main__':
