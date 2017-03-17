@@ -75,7 +75,7 @@ class Chromosome:
         self.fertility = (int(f1, 2), int(f2, 2))
 
         dna = "".join((meta_sugar, meta_spice, init_sugar, init_spice, vision, gender, f1, f2, dying_age))
-        self.dna_color = convert_to_color(dna)
+        self.dna_color = Chromosome.convert_to_color(dna)
 
     def get_genome_substring(self, key):
         """
@@ -194,17 +194,17 @@ class Chromosome:
             return "0"
 
     # This method makes sense only for Lamarckian Evolution!
-    #def map_attributes_to_genome(self, attributes):
+    # def map_attributes_to_genome(self, attributes):
     #    return
 
     @staticmethod
     def convert_to_color(dna):
-        #l = len(dna)
-        #l1 = int(l / 3)
-        #l2 = 2 * l1
-        r_string = dna[0::3]  #dna[0:l1]
-        g_string = dna[1::3]  #dna[l1:l2]
-        b_string = dna[2::3]  #dna[l2:]
+        # l = len(dna)
+        # l1 = int(l / 3)
+        # l2 = 2 * l1
+        r_string = dna[0::3]  # dna[0:l1]
+        g_string = dna[1::3]  # dna[l1:l2]
+        b_string = dna[2::3]  # dna[l2:]
         r_num = int(r_string, 2)
         g_num = int(g_string, 2)
         b_num = int(b_string, 2)

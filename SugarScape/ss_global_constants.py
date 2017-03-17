@@ -20,8 +20,18 @@ class GC(GlobalConstants):
         ################################
         self.START_AGENTS = 1
         self.VISION = 2
-        self.METABOLISM_SUGAR = 2
-        self.METABOLISM_SPICE = 2
+        # self.METABOLISM_SUGAR = 2
+        # self.METABOLISM_SPICE = 2
+        self.MIN_METABOLISM = 2
+        self.MAX_METABOLISM = 6
+        self.M_FERTILITY_START = [13, 18]
+        self.M_FERTILITY_END = [55, 65]
+        self.F_FERTILITY_START = [15, 21]
+        self.F_FERTILITY_END = [45, 55]
+        self.STARTING_SUGAR = [0, 10]
+        self.STARTING_SPICE = [0, 10]
+        self.MAX_AGENT_LIFE = 122
+        self.IMMUNE_SYSTEM_GENOME_LENGTH = 5
         ################################
         #         CA CONSTANTS         #
         ################################

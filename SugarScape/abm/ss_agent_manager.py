@@ -1,3 +1,5 @@
+from abm.ss_agent import SSAgent
+
 __author__ = 'Michael Wagner'
 __version__ = '1.0'
 
@@ -31,23 +33,33 @@ class SSAgentManager(CabAgent):
                 if not (temp_pos in abm.agent_locations):
                     new_position = temp_pos
                     self.agent_counter += 1
-                    abm.add_agent(self.generate_agent(ca, abm), new_position)
+                    abm.add_agent(self.generate_agent(ca, abm))
 
     def generate_agent(self, ca, abm):
-        meta_sugar = random.randint(gc.MIN_METABOLISM, gc.MAX_METABOLISM)
-        meta_spice = random.randint(gc.MIN_METABOLISM, gc.MAX_METABOLISM)
-        vision = random.randint(1, gc.VISION + 1)
+        x = 0
+        y = 0
+        while (x, y) in abm.agent_locations:
+            x = random.randint(0, self.gc.DIM_X)
+            y = random.randint(0, self.gc.DIM_Y)
+        meta_sugar = random.randint(self.gc.MIN_METABOLISM, self.gc.MAX_METABOLISM)
+        meta_spice = random.randint(self.gc.MIN_METABOLISM, self.gc.MAX_METABOLISM)
+        vision = random.randint(1, self.gc.VISION + 1)
         g = random.choice([0, 1])
         if g == 1:
-            f = (gc.F_FERTILITY_START, random.randint(gc.F_FERTILITY_END[0], gc.F_FERTILITY_END[1]))
+            f1 = random.randint(self.gc.F_FERTILITY_START[0], self.gc.F_FERTILITY_START[1])
+            f2 = random.randint(self.gc.F_FERTILITY_END[0], self.gc.F_FERTILITY_END[1])
+            f = (f1, f2)
         else:
-            f = (gc.M_FERTILITY_START, random.randint(gc.M_FERTILITY_END[0], gc.M_FERTILITY_END[1]))
-        su = random.randint(gc.STARTING_SUGAR[0], gc.STARTING_SUGAR[1])
-        sp = random.randint(gc.STARTING_SUGAR[0], gc.STARTING_SUGAR[1])
-        d = random.randint(f[1], gc.MAX_AGENT_LIFE)
-        c = [random.randint(0, gc.NUM_TRIBES - 1) for _ in range(11)]
-        imm_sys = [random.getrandbits(gc.NUM_TRIBES - 1) for _ in range(gc.IMMUNE_SYSTEM_GENOME_LENGTH)]
-        a = 0  # random.randint(0, int(gc.MAX_AGENT_LIFE / 2))
+            f1 = random.randint(self.gc.M_FERTILITY_START[0], self.gc.M_FERTILITY_START[1])
+            f2 = random.randint(self.gc.M_FERTILITY_END[0], self.gc.M_FERTILITY_END[1])
+            f = (f1, f2)
+        su = random.randint(self.gc.STARTING_SUGAR[0], self.gc.STARTING_SUGAR[1])
+        sp = random.randint(self.gc.STARTING_SUGAR[0], self.gc.STARTING_SUGAR[1])
+        d = random.randint(f[1], self.gc.MAX_AGENT_LIFE)
+        c = [random.randint(0, int((meta_sugar + meta_spice) / 2)) for _ in range(11)]
+        # imm_sys = [random.getrandbits(self.gc.NUM_TRIBES - 1) for _ in range(self.gc.IMMUNE_SYSTEM_GENOME_LENGTH)]
+        imm_sys = [random.getrandbits(int((meta_sugar + meta_spice) / 2)) for _ in range(self.gc.IMMUNE_SYSTEM_GENOME_LENGTH)]
+        a = 0  # random.randint(0, int(self.gc.MAX_AGENT_LIFE / 2))
         gene_string = "{0:03b}".format(meta_sugar) + "{0:03b}".format(meta_spice)\
                       + "{0:06b}".format(su) + "{0:06b}".format(sp) \
                       + "{0:03b}".format(vision) + "{0:01b}".format(g)\
@@ -57,11 +69,12 @@ class SSAgentManager(CabAgent):
         genome = (gene_string, gene_string, c, imm_sys, generation)
 
         # Retrieve a spawn position from the position list belonging to its tribe.
-        tribe_id = max(set(c), key=c.count)
-        random.shuffle(position_list[tribe_id])
-        p = position_list[tribe_id].pop()
+        # tribe_id = max(set(c), key=c.count)
+        # random.shuffle(position_list[tribe_id])
+        # p = position_list[tribe_id].pop()
         # Create the new agent and add to both, dictionary and list.
-        new_agent = SSAgent(p[0], p[1], gc.CELL_SIZE, su, sp, genome, a, self.tribes)
-        self.agent_dict[p[0], p[1]] = new_agent
-        self.agent_list.append(new_agent)
+        new_agent = SSAgent(x, y, self.gc, su, sp, a, genome)
+        # self.agent_dict[x, y] = new_agent
+        # self.agent_list.append(new_agent)
+        abm.add_agent(new_agent)
         return new_agent

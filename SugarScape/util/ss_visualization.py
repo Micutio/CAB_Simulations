@@ -1,10 +1,11 @@
+import pygame
+import math
+from cab.util.cab_visualization import Visualization
+
+
 __author__ = 'Michael Wagner'
 __version__ = '1.0'
 
-import pygame
-import math
-from cab.cab_global_constants import GlobalConstants
-from cab.util.cab_visualization import Visualization
 
 class Visualizer(Visualization):
     """
@@ -22,8 +23,8 @@ class Visualizer(Visualization):
         self.draw_cell_mode = 1
         self.gc = gc
 
-    def clone(self, gc, surface, cab_sys):
-        return Visualizer(gc, surface, cab_sys)
+    def clone(self, surface, cab_sys):
+        return Visualizer(self.gc, surface, cab_sys)
 
     def draw_agent(self, agent):
         self.draw_agent_w_color(agent, (180, 180, 180))

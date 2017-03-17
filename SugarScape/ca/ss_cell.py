@@ -28,7 +28,7 @@ class WorldCell(CellHex):
         self.max_sugar = int(self.t_gen.get(self.x, self.y))
         self.max_spice = int(self.gc.MAX_SUGAR - self.sugar)
 
-    def clone(self, x, y, c_size):
+    def clone(self, x, y):
         wc = WorldCell(x, y, self.gc)
         wc.set_terrain_gen(self.t_gen)
         return wc

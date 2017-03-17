@@ -18,6 +18,7 @@ class SSAgent(CabAgent):
         self.sugar = su
         self.spice = sp
         self.age = age
+        self.neighbors = []
         self.chromosome = Chromosome(genomes)
         self.init_sugar = self.chromosome.init_sugar
         self.init_spice = self.chromosome.init_spice
@@ -39,6 +40,7 @@ class SSAgent(CabAgent):
         self.immune_system = ["".join(map(str, self.chromosome.immune_system))]
 
     def perceive_and_act(self, ca, abm):
+        self.neighbors = ca.get_agent_neighborhood(abm.agent_set, self.x, self.y, self.vision)
         best_cell = self.r1_select_best_cell(ca, abm)
         self.move_to(best_cell)
         self.eat_from(best_cell)
@@ -54,13 +56,13 @@ class SSAgent(CabAgent):
 
         # Find cells with the highest possible reward.
         # TODO: check if distance calculation is correct for hex grids
+        print(neighborhood.values())
         for cell in list(neighborhood.values()):
             if not best_cells:
                 best_cells = [cell]
                 max_w = self.welfare(cell.sugar, cell.spice)
                 max_dist = (abs(cell.x - self.x) + abs(cell.y - self.y))
             else:
-                dist = (abs(cell.x - self.x) + abs(cell.y - self.y))
                 dist = ca.hex_distance(self.x, self.y, cell.q, cell.r)
                 welfare = self.welfare(cell.sugar, cell.spice)
                 if welfare > max_w:
@@ -240,7 +242,7 @@ class SSAgent(CabAgent):
             self.sugar_price /= trade_count
             self.spice_price /= trade_count
 
-    def r4_diseases(self, neighbors):
+    def r4_diseases(self):
         """
         All diseases, the agent is currently infected with, are trying to spread to its neighbors.
         """
@@ -249,7 +251,7 @@ class SSAgent(CabAgent):
         #        for _, d in self.diseases.items():
         #            d.spread(n[1])
         for _, d in self.diseases.items():
-            targets = [agent for (cell, agent) in neighbors if is not agent is None and not agent.dead and not self.dead]
+            targets = [agent for (cell, agent) in self.neighbors if agent is not None and not agent.dead and not self.dead]
             if targets:
                 victim = random.choice(targets)
                 d.spread(victim)
@@ -303,7 +305,9 @@ class SSAgent(CabAgent):
                 c.spice += math.floor(self.spice / num_kids)
 
         # Update tribe's information
-        self.tribe.tribal_wealth[self.tribe_id] -= (self.sugar + self.spice)
+        # self.tribe.tribal_wealth[self.tribe_id] -= (self.sugar + self.spice)
         self.sugar = 0
         self.spice = 0
 
+    def is_fertile(self):
+        return self.chromosome.fertility[0] <= self.age <= self.chromosome.fertility[1]
