@@ -56,7 +56,6 @@ class SSAgent(CabAgent):
 
         # Find cells with the highest possible reward.
         # TODO: check if distance calculation is correct for hex grids
-        print(neighborhood.values())
         for cell in list(neighborhood.values()):
             if not best_cells:
                 best_cells = [cell]
