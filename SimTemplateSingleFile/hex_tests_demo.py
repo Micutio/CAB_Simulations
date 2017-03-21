@@ -6,9 +6,10 @@ Uses the Complex Automaton Base.
 
 # External library imports.
 import pygame
-import numpy
+import math
 
 # CAB system imports.
+from cab.abm.cab_agent import CabAgent
 from cab.ca.cab_ca_hex import CAHex
 from cab.ca.cab_cell import CellHex
 from cab.cab_global_constants import GlobalConstants
@@ -49,8 +50,8 @@ class GC(GlobalConstants):
 
 
 class SimpleCell(CellHex):
-    def __init__(self, x, y, gc):
-        super().__init__(x, y, gc)
+    def __init__(self, x, y, global_const):
+        super().__init__(x, y, global_const)
         self.state = False
 
     def sense_neighborhood(self):
@@ -64,6 +65,14 @@ class SimpleCell(CellHex):
         return SimpleCell(x, y, self.gc)
 
 
+class SimpleAgent(CabAgent):
+    def __init__(self, x, y, global_const):
+        super().__init__(x, y, global_const)
+
+    def perceive_and_act(self, abm, ca):
+        pass
+
+
 class SimpleIO(InputHandler):
     def __init__(self, cab_sys):
         super().__init__(cab_sys)
@@ -72,6 +81,7 @@ class SimpleIO(InputHandler):
         self.cell_a = None
         self.cell_b = None
         self.cell_c = None
+        self.highlighted_cells = []
 
     def clone(self, cab_sys):
         return SimpleIO(cab_sys)
@@ -79,16 +89,20 @@ class SimpleIO(InputHandler):
     def custom_mouse_action(self, button):
         # Click on left mouse button.
         if button == 1:
+            self.add_agent()
             # self.show_neighbors_up_to_dist()
+            # self.dist += 1
             # self.show_cell_in_direction()
-            self.show_neighbors()
+            # self.show_neighbors()
         # Click on middle mouse button / mouse wheel
         elif button == 2:
-            pass
+            self.show_agent_neighborhood()
 
         # Click on right mouse button
         elif button == 3:
-            pass
+            # self.show_neighbors_up_to_dist()
+            # self.dist -= 1
+            self.show_agent_empty_neighborhood()
 
     def show_cell_in_direction(self):
         if self.show_direction_state == 0:
@@ -130,6 +144,30 @@ class SimpleIO(InputHandler):
         for n in self.sys.ca.ca_grid[cell_x, cell_y].neighbors:
             n.state = True
 
+    def add_agent(self):
+        agent_x, agent_y = self.get_mouse_hex_coords()
+        self.sys.abm.add_agent(SimpleAgent(agent_x, agent_y, self.sys.gc))
+
+    def show_agent_empty_neighborhood(self):
+        for cell in self.highlighted_cells:
+            cell.state = False
+        self.highlighted_cells = []
+        agent_x, agent_y = self.get_mouse_hex_coords()
+        neighborhood = self.sys.ca.get_empty_agent_neighborhood(agent_x, agent_y, 3)
+        for key, value in neighborhood.items():
+            self.highlighted_cells.append(value)
+            value.state = True
+
+    def show_agent_neighborhood(self):
+        for cell in self.highlighted_cells:
+            cell.state = False
+        self.highlighted_cells = []
+        agent_x, agent_y = self.get_mouse_hex_coords()
+        neighborhood = self.sys.ca.get_agent_neighborhood(agent_x, agent_y, 3)
+        for key, value in neighborhood.items():
+            self.highlighted_cells.append(value[0])
+            value[0].state = True
+
 
 class SimpleVis(Visualization):
     def __init__(self, global_const, sys,  screen):
@@ -154,6 +192,22 @@ class SimpleVis(Visualization):
             else:
                 pygame.gfxdraw.filled_polygon(self.surface, cell.get_corners(), (0, 255, 0))
         pygame.gfxdraw.aapolygon(self.surface, cell.get_corners(), (0, 0, 0))
+
+    def draw_agent(self, agent):
+        if agent is None:
+            pass
+        else:
+            radius = int(agent.size / 1.5)
+
+            horiz = self.gc.CELL_SIZE * 2 * (math.sqrt(3) / 2)
+            offset = agent.y * (horiz / 2)
+            x = int(agent.x * horiz) + int(offset)
+
+            vert = self.gc.CELL_SIZE * 2 * (3 / 4)
+            y = int(agent.y * vert)
+
+            pygame.draw.circle(self.surface, (150, 255, 225), (x, y), radius, 0)
+            pygame.gfxdraw.aacircle(self.surface, x, y, radius, (50, 100, 50))
 
 
 if __name__ == '__main__':

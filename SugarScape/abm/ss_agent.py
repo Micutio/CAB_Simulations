@@ -39,9 +39,9 @@ class SSAgent(CabAgent):
         self.diseases = {}
         self.immune_system = ["".join(map(str, self.chromosome.immune_system))]
 
-    def perceive_and_act(self, ca, abm):
-        self.neighbors = ca.get_agent_neighborhood(abm.agent_set, self.x, self.y, self.vision)
-        best_cell = self.r1_select_best_cell(ca, abm)
+    def perceive_and_act(self, abm, ca):
+        self.neighbors = ca.get_agent_neighborhood(self.x, self.y, self.vision)
+        best_cell = self.r1_select_best_cell(ca)
         self.move_to(best_cell)
         self.eat_from(best_cell)
 
@@ -49,7 +49,7 @@ class SSAgent(CabAgent):
         """
         Agent selects the best cell to move to, according to: its resources, occupier and tribal alignment.
         """
-        neighborhood = ca.get_empty_agent_neighborhood(abm.agent_locations, self.x, self.y, self.vision)
+        neighborhood = ca.get_empty_agent_neighborhood(self.x, self.y, self.vision)
         best_cells = list()
         max_dist = 0
         max_w = 0
@@ -126,7 +126,7 @@ class SSAgent(CabAgent):
         self.spice -= self.meta_spice
 
     def r2_procreate(self, ca, abm):
-        neighborhood = ca.get_agent_neighborhood(abm.agent_locations, self.x, self.y, 1)
+        neighborhood = ca.get_agent_neighborhood(self.x, self.y, 1)
 
         if self.is_fertile():
             free_cells = [v[0] for v in list(neighborhood.values()) if v[1] is None]

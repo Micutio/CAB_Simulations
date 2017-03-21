@@ -16,7 +16,7 @@ class HiveAgent(CabAgent):
         self.dead = False
         self.spawned = 0
         
-    def perceive_and_act(self, ca, abm):
+    def perceive_and_act(self, abm, ca):
         if self.spawned < self.max_ants:
             ant = AntAgent(self.x, self.y, self.gc)
             abm.add_agent(ant)
