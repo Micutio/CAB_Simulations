@@ -24,7 +24,7 @@ class SSAgentManager(CabAgent):
         super().__init__(None, None, gc)
         self.agent_counter = 0
 
-    def perceive_and_act(self, ca, abm):
+    def perceive_and_act(self, abm, ca):
         self.agent_counter = len(abm.agent_set) - 1
         while self.agent_counter < self.gc.START_AGENTS:
             new_position = None
@@ -33,14 +33,12 @@ class SSAgentManager(CabAgent):
                 if not (temp_pos in abm.agent_locations):
                     new_position = temp_pos
                     self.agent_counter += 1
-                    abm.add_agent(self.generate_agent(ca, abm))
+                    abm.add_agent(self.generate_agent(abm, ca))
 
-    def generate_agent(self, ca, abm):
-        x = 0
-        y = 0
+    def generate_agent(self, abm, ca):
+        x, y = ca.get_random_valid_position()
         while (x, y) in abm.agent_locations:
-            x = random.randint(0, self.gc.DIM_X)
-            y = random.randint(0, self.gc.DIM_Y)
+            x, y = ca.get_random_valid_position()
         meta_sugar = random.randint(self.gc.MIN_METABOLISM, self.gc.MAX_METABOLISM)
         meta_spice = random.randint(self.gc.MIN_METABOLISM, self.gc.MAX_METABOLISM)
         vision = random.randint(1, self.gc.VISION + 1)

@@ -20,6 +20,7 @@ class WorldCell(CellHex):
         self.max_spice = 0
         self.growth_cycle = 3
         self.growth_cycle_count = 0
+        self.state = False
 
     def set_terrain_gen(self, tg):
         self.t_gen = tg

@@ -55,7 +55,10 @@ class Visualizer(Visualization):
         """
         red, green, blue = Visualizer.calculate_cell_color(cell, self.gc)
         # print(red, green, blue)
-        pygame.gfxdraw.filled_polygon(self.surface, cell.corners, (red, green, blue))
+        if cell.state == True:
+            pygame.gfxdraw.filled_polygon(self.surface, cell.corners, (200, 200, 200))
+        else:
+            pygame.gfxdraw.filled_polygon(self.surface, cell.corners, (red, green, blue))
         if self.gc.DISPLAY_GRID:
             pygame.gfxdraw.aapolygon(self.surface, cell.corners, (190, 190, 190))
         else:

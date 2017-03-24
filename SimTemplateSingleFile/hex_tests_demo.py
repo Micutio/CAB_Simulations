@@ -163,7 +163,8 @@ class SimpleIO(InputHandler):
             cell.state = False
         self.highlighted_cells = []
         agent_x, agent_y = self.get_mouse_hex_coords()
-        neighborhood = self.sys.ca.get_agent_neighborhood(agent_x, agent_y, 3)
+        agent = self.sys.abm.agent_locations[(agent_x, agent_y)]
+        neighborhood = self.sys.ca.get_agent_neighborhood(agent_x, agent_y, agent.vision)
         for key, value in neighborhood.items():
             self.highlighted_cells.append(value[0])
             value[0].state = True

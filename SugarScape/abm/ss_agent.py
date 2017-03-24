@@ -25,6 +25,7 @@ class SSAgent(CabAgent):
         self.meta_sugar = self.chromosome.meta_sugar
         self.meta_spice = self.chromosome.meta_spice
         self.vision = self.chromosome.vision
+
         self.gender = self.chromosome.gender
         self.fertility = self.chromosome.fertility
         self.dying_age = self.chromosome.dying_age
@@ -41,11 +42,10 @@ class SSAgent(CabAgent):
 
     def perceive_and_act(self, abm, ca):
         self.neighbors = ca.get_agent_neighborhood(self.x, self.y, self.vision)
-        best_cell = self.r1_select_best_cell(ca)
-        self.move_to(best_cell)
-        self.eat_from(best_cell)
+        self.r1_select_best_cell(ca)
+        self.r2_procreate(abm, ca)
 
-    def r1_select_best_cell(self, ca, abm):
+    def r1_select_best_cell(self, ca):
         """
         Agent selects the best cell to move to, according to: its resources, occupier and tribal alignment.
         """
@@ -56,6 +56,7 @@ class SSAgent(CabAgent):
 
         # Find cells with the highest possible reward.
         # TODO: check if distance calculation is correct for hex grids
+        # print('neighborhood: {0}'.format(list(neighborhood.keys())))
         for cell in list(neighborhood.values()):
             if not best_cells:
                 best_cells = [cell]
@@ -73,12 +74,15 @@ class SSAgent(CabAgent):
                     max_dist = dist
                 elif welfare == max_w and dist == max_dist:
                     best_cells.append(cell)
+
         result_cell = random.choice(best_cells)
         # if self.vision > 1:
         #     _q, _r = CAHex.get_cell_in_direction(ca.ca_grid[self.x, self.y], result_cell)
         #     return ca.ca_grid[_q, _r]
         # else:
-        return result_cell
+        # return result_cell
+        self.move_to(result_cell)
+        self.eat_from(result_cell)
 
     def welfare(self, su, sp):
         """
@@ -116,6 +120,7 @@ class SSAgent(CabAgent):
         # ... and move to the new one.
         self.x = target_c.x
         self.y = target_c.y
+        # print('coming from {0},{1} - moving to {2},{3}'.format(self.prev_x, self.prev_y, target_c.x, target_c.y))
 
     def eat_from(self, cell):
         self.sugar += cell.sugar
@@ -125,7 +130,7 @@ class SSAgent(CabAgent):
         self.sugar -= self.meta_sugar
         self.spice -= self.meta_spice
 
-    def r2_procreate(self, ca, abm):
+    def r2_procreate(self, abm, ca):
         neighborhood = ca.get_agent_neighborhood(self.x, self.y, 1)
 
         if self.is_fertile():
@@ -160,7 +165,7 @@ class SSAgent(CabAgent):
                     m.children.append(child)
                     # Update the abm that it has to schedule a new agent.
                     abm.add_agent(child)
-                    return child
+                    # return child
 
     def r3_trading(self, ca, abm):
         """

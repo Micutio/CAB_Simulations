@@ -24,19 +24,33 @@ class EventHandler(InputHandler):
         return cell_q, cell_r
 
     def custom_mouse_action(self, button):
-        pass
         # Click on left mouse button.
         # -> set food of cell to max.
-        # if button == 1:
-        #     agent_x, agent_y = self.get_mouse_hex_coords()
-        #     food = FoodAgent(agent_x, agent_y, self.sys.gc)
-        #     self.sys.abm.add_agent(food)
+        if button == 1:
+            self.show_agent_neighborhood()
         # Click on right mouse button
         # -> toggle cell to be a hive
         # elif button == 3:
-        #     agent_x, agent_y = self.get_mouse_hex_coords()
-        #     hive = HiveAgent(agent_x, agent_y, self.sys.gc)
-        #     self.sys.abm.add_agent(hive)
+        #     self.show_neighbors_up_to_dist()
+
+    def show_neighbors_up_to_dist(self):
+        cell_x, cell_y = self.get_mouse_hex_coords()
+        agent = self.sys.abm.agent_locations[(cell_x, cell_y)]
+        neighborhood = self.sys.ca.get_cell_neighborhood(cell_x, cell_y, agent.vision)
+        for v in list(self.sys.ca.ca_grid.values()):
+            v.state = False
+        for v in list(neighborhood.values()):
+            v.state = True
+
+    def show_agent_neighborhood(self):
+        agent_x, agent_y = self.get_mouse_hex_coords()
+        if(agent_x, agent_y) in self.sys.abm.agent_locations:
+            agent = self.sys.abm.agent_locations[(agent_x, agent_y)]
+            neighborhood = self.sys.ca.get_empty_agent_neighborhood(agent_x, agent_y, agent.vision)
+            for v in list(self.sys.ca.ca_grid.values()):
+                v.state = False
+            for key, value in neighborhood.items():
+                value.state = True
 
     def custom_keyboard_action(self, active_key):
         if active_key == pygame.K_g:
@@ -44,7 +58,7 @@ class EventHandler(InputHandler):
             if self.sys.gc.DISPLAY_GRID:
                 print('[ss_io_handling] displaying cell grid')
             else:
-                print('[ss_io_handling]h iding cell grid')
+                print('[ss_io_handling] hiding cell grid')
 
     @staticmethod
     def hex_round(q, r):

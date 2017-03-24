@@ -14,11 +14,11 @@ class GC(GlobalConstants):
         ################################
         self.RUN_SIMULATION = False
         self.TIME_STEP = 0
-        self.ONE_AGENT_PER_CELL = False
+        self.ONE_AGENT_PER_CELL = True
         ################################
         #        ABM CONSTANTS         #
         ################################
-        self.START_AGENTS = 1
+        self.START_AGENTS = 20
         self.VISION = 2
         # self.METABOLISM_SUGAR = 2
         # self.METABOLISM_SPICE = 2
