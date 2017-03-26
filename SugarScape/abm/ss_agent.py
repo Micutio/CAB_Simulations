@@ -129,6 +129,8 @@ class SSAgent(CabAgent):
         cell.spice = 0
         self.sugar -= self.meta_sugar
         self.spice -= self.meta_spice
+        if self.sugar <= 0 or self.spice <= 0:
+            self.die(agent_positions)
 
     def r2_procreate(self, abm, ca):
         neighborhood = ca.get_agent_neighborhood(self.x, self.y, 1)
