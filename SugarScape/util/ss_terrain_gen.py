@@ -1,11 +1,5 @@
 import random
 
-"""
-Main module of the Sugarscape simulation
-Updates:
-    10-10-2015: First Draft
-    07-11-2015: Complete rework, retrieval of all symbols and key statistics
-"""
 
 __author__ = 'Michael Wagner'
 __version__ = '1.0'
@@ -16,7 +10,7 @@ class TerrainGenerator:
         self.x_dim = x_dim * 2
         self.y_dim = y_dim * 2
         self.highest = 20
-        self.deepest = -20 # -20
+        self.deepest = -20
         self.slope = 1.0
         self.smoothness = 2
         self.water_level = 0

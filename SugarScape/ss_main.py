@@ -11,7 +11,7 @@ from ca.ss_cell import WorldCell
 from ss_global_constants import GC
 from util.ss_io_handling import EventHandler
 from util.ss_visualization import Visualizer
-from util.ss_terrain_gen import TerrainGenerator
+from util.ss_hex_terrain_gen import TerrainGenerator
 
 __author__ = 'Michael Wagner'
 
@@ -22,7 +22,7 @@ if __name__ == '__main__':
     ph = EventHandler(None)
     pv = Visualizer(gc, None, None)
 
-    tg = TerrainGenerator(gc.DIM_X, gc.DIM_Y)
+    tg = TerrainGenerator(gc)
     pc.set_terrain_gen(tg)
 
     # Use assets to initialize simulation system.

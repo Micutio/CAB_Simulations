@@ -3,7 +3,6 @@ import random
 import math
 
 from cab.abm.cab_agent import CabAgent
-from cab.ca.cab_ca_hex import CAHex
 
 from abm.ss_genetics import Chromosome
 
@@ -45,6 +44,12 @@ class SSAgent(CabAgent):
         self.neighbors = ca.get_agent_neighborhood(self.x, self.y, self.vision)
         self.r1_select_best_cell(ca)
         self.r2_procreate(abm, ca)
+        self.r0_age()
+
+    def r0_age(self):
+        self.age += 1
+        if self.age > self.dying_age:
+            self.die()
 
     def r1_select_best_cell(self, ca):
         """
@@ -139,8 +144,9 @@ class SSAgent(CabAgent):
         neighborhood = ca.get_agent_neighborhood(self.x, self.y, 1)
 
         if self.is_fertile():
-            free_cells = [v[0] for v in list(neighborhood.values()) if v[1] is None]
-            mates = [v[1] for v in list(neighborhood.values()) if not v[1] is None]
+            free_cells = [v[0] for v in list(neighborhood.values())
+                          if v[1] is False and (v[0].x != self.x and v[0].y != self.y)]
+            mates = [v[1] for v in list(neighborhood.values()) if not v[1] is False]
 
             if mates:
                 m = random.choice(mates)
@@ -152,7 +158,6 @@ class SSAgent(CabAgent):
                     c = random.choice(free_cells)
                     n_x = c.x
                     n_y = c.y
-                    n_s = self.size
                     # Give him / her initial resources
                     n_su = int(self.init_sugar / 2) + int(m.init_sugar / 2)
                     n_sp = int(self.init_spice / 2) + int(m.init_spice / 2)
@@ -163,15 +168,16 @@ class SSAgent(CabAgent):
                     # Fuse mommy's and daddy's chromosomes to create Juniors attributes.
                     # This is the actual creation of the baby. Behold the wonders of nature!
                     n_chromosome = self.chromosome.merge_with(m.chromosome)
-                    child = SSAgent(n_x, n_y, n_s, n_su, n_sp, n_chromosome, 0)
+                    child = SSAgent(n_x, n_y, self.gc, n_su, n_sp, 0, n_chromosome)
                     # Give the parents a reference to their newborn so they can,
                     # inherit their wealth to it before their inevitable demise.
                     self.children.append(child)
                     m.children.append(child)
                     # Update the abm that it has to schedule a new agent.
                     abm.add_agent(child)
-                    # return child
-                    print('Procreation successful!')
+                    print('me: {0},{1}'.format(self.x, self.y))
+                    print('she: {0},{1}'.format(m.x, m.y))
+                    print('it: {0},{1}'.format(child.x, child.y))
 
     def r3_trading(self, ca, abm):
         """

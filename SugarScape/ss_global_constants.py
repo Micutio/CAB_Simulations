@@ -18,12 +18,12 @@ class GC(GlobalConstants):
         ################################
         #        ABM CONSTANTS         #
         ################################
-        self.START_AGENTS = 250
+        self.START_AGENTS = 400
         self.VISION = 2
         # self.METABOLISM_SUGAR = 2
         # self.METABOLISM_SPICE = 2
-        self.MIN_METABOLISM = 2
-        self.MAX_METABOLISM = 6
+        self.MIN_METABOLISM = 1
+        self.MAX_METABOLISM = 4
         self.M_FERTILITY_START = [13, 18]
         self.M_FERTILITY_END = [55, 65]
         self.F_FERTILITY_START = [15, 21]

@@ -1,10 +1,8 @@
 """
-Module containing the cell definition for the ant world.
+Module containing the cell definition for the Sugarscape world.
 """
 
-from cab.cab_global_constants import GlobalConstants
 from cab.ca.cab_cell import CellHex
-from util.ss_terrain_gen import TerrainGenerator
 
 __author__ = 'Michael Wagner'
 __version__ = '1.0'
@@ -28,6 +26,7 @@ class WorldCell(CellHex):
         self.spice = int(self.gc.MAX_SUGAR - self.sugar)
         self.max_sugar = int(self.t_gen.get(self.x, self.y))
         self.max_spice = int(self.gc.MAX_SUGAR - self.sugar)
+        # print("sugar: {0}, spice: {1}".format(self.sugar, self.spice))
 
     def clone(self, x, y):
         wc = WorldCell(x, y, self.gc)
