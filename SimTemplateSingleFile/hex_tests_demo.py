@@ -89,10 +89,10 @@ class SimpleIO(InputHandler):
     def custom_mouse_action(self, button):
         # Click on left mouse button.
         if button == 1:
-            self.add_agent()
+            # self.add_agent()
             # self.show_neighbors_up_to_dist()
             # self.dist += 1
-            # self.show_cell_in_direction()
+            self.show_cell_in_direction()
             # self.show_neighbors()
         # Click on middle mouse button / mouse wheel
         elif button == 2:

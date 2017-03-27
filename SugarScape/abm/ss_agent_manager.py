@@ -23,22 +23,29 @@ class SSAgentManager(CabAgent):
     def __init__(self, x, y, gc):
         super().__init__(None, None, gc)
         self.agent_counter = 0
+        self.initial_run = True
+        self.possible_starting_locations = []
 
     def perceive_and_act(self, abm, ca):
-        self.agent_counter = len(abm.agent_set) - 1
-        while self.agent_counter < self.gc.START_AGENTS:
-            new_position = None
-            while new_position is None:
-                temp_pos = ca.get_random_valid_position()
-                if not (temp_pos in abm.agent_locations):
-                    new_position = temp_pos
-                    self.agent_counter += 1
-                    abm.add_agent(self.generate_agent(abm, ca))
+        if self.initial_run:
+            self.agent_counter = len(abm.agent_set) - 1
+            self.possible_starting_locations = list(ca.ca_grid.keys())
+            while self.agent_counter < self.gc.START_AGENTS:
+                # new_position = None
+                # while new_position is None:
+                #     temp_pos = ca.get_random_valid_position()
+                #     if not (temp_pos in abm.agent_locations):
+                #         new_position = temp_pos
+                self.agent_counter += 1
+                abm.add_agent(self.generate_agent(abm, ca))
+            self.initial_run = False
 
     def generate_agent(self, abm, ca):
-        x, y = ca.get_random_valid_position()
-        while (x, y) in abm.agent_locations:
-            x, y = ca.get_random_valid_position()
+        # x, y = ca.get_random_valid_position()
+        # while (x, y) in abm.agent_locations:
+        #     x, y = ca.get_random_valid_position()
+        x, y = random.choice(self.possible_starting_locations)
+        self.possible_starting_locations.remove((x, y))
         meta_sugar = random.randint(self.gc.MIN_METABOLISM, self.gc.MAX_METABOLISM)
         meta_spice = random.randint(self.gc.MIN_METABOLISM, self.gc.MAX_METABOLISM)
         vision = random.randint(1, self.gc.VISION + 1)
@@ -74,5 +81,5 @@ class SSAgentManager(CabAgent):
         new_agent = SSAgent(x, y, self.gc, su, sp, a, genome)
         # self.agent_dict[x, y] = new_agent
         # self.agent_list.append(new_agent)
-        abm.add_agent(new_agent)
+        # abm.add_agent(new_agent)
         return new_agent

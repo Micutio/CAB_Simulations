@@ -7,8 +7,8 @@ from cab.cab_global_constants import GlobalConstants
 class GC(GlobalConstants):
     def __init__(self):
         super().__init__()
-        self.VERSION = '03-2016'
-        self.TITLE = 'Foraging Ant'
+        self.VERSION = '03-2017'
+        self.TITLE = 'Sugarscape'
         ################################
         #     SIMULATION CONSTANTS     #
         ################################
@@ -18,7 +18,7 @@ class GC(GlobalConstants):
         ################################
         #        ABM CONSTANTS         #
         ################################
-        self.START_AGENTS = 20
+        self.START_AGENTS = 250
         self.VISION = 2
         # self.METABOLISM_SUGAR = 2
         # self.METABOLISM_SPICE = 2
@@ -48,8 +48,3 @@ class GC(GlobalConstants):
         ################################
         #  SIMULATION SPEC. CONSTANTS  #
         ################################
-        self.MAX_ANTS = 25
-        self.MAX_PHEROMONE = 100
-        self.MAX_FOOD = 100
-        self.DIFFUSION = 0.001
-        self.EVAPORATION = 0.001

@@ -1,28 +1,28 @@
+import random
+
 """
-Main module of the sugarscape simulation
+Main module of the Sugarscape simulation
 Updates:
     10-10-2015: First Draft
-    07-11-2015: Complete rework, retrieval of all symbols and keystats
+    07-11-2015: Complete rework, retrieval of all symbols and key statistics
 """
 
 __author__ = 'Michael Wagner'
 __version__ = '1.0'
 
-import random
 
-
-class TerrainGenerator():
+class TerrainGenerator:
     def __init__(self, x_dim, y_dim):
         self.x_dim = x_dim * 2
         self.y_dim = y_dim * 2
-        self.highest = 0
-        self.deepest = -20
+        self.highest = 20
+        self.deepest = -20 # -20
         self.slope = 1.0
         self.smoothness = 2
         self.water_level = 0
         self.landscape = None
         self.factor = 10
-        self.landscape = self.get_coastal_landscape()
+        self.landscape = self.get_island_landscape()
         
         # self.landscape = self.get_coastal_landscape()
 

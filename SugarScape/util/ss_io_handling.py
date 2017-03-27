@@ -60,33 +60,33 @@ class EventHandler(InputHandler):
             else:
                 print('[ss_io_handling] hiding cell grid')
 
-    @staticmethod
-    def hex_round(q, r):
-        return EventHandler.cube_to_hex(*EventHandler.cube_round(*EventHandler.hex_to_cube(q, r)))
-
-    @staticmethod
-    def cube_round(x, y, z):
-        rx = round(x)
-        ry = round(y)
-        rz = round(z)
-        dx = abs(rx - x)
-        dy = abs(ry - y)
-        dz = abs(rz - z)
-
-        if dx > dy and dx > dz:
-            rx = -ry - rz
-        elif dy > dz:
-            ry = -rx - rz
-        else:
-            rz = -rx - ry
-
-        return rx, ry, rz
-
-    @staticmethod
-    def cube_to_hex(x, y, z):
-        return x, y
-
-    @staticmethod
-    def hex_to_cube(q, r):
-        z = -q - r
-        return q, r, z
+    # @staticmethod
+    # def hex_round(q, r):
+    #     return EventHandler.cube_to_hex(*EventHandler.cube_round(*EventHandler.hex_to_cube(q, r)))
+    #
+    # @staticmethod
+    # def cube_round(x, y, z):
+    #     rx = round(x)
+    #     ry = round(y)
+    #     rz = round(z)
+    #     dx = abs(rx - x)
+    #     dy = abs(ry - y)
+    #     dz = abs(rz - z)
+    #
+    #     if dx > dy and dx > dz:
+    #         rx = -ry - rz
+    #     elif dy > dz:
+    #         ry = -rx - rz
+    #     else:
+    #         rz = -rx - ry
+    #
+    #     return rx, ry, rz
+    #
+    # @staticmethod
+    # def cube_to_hex(x, y, z):
+    #     return x, y
+    #
+    # @staticmethod
+    # def hex_to_cube(q, r):
+    #     z = -q - r
+    #     return q, r, z

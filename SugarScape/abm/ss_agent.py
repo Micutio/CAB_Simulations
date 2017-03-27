@@ -3,6 +3,7 @@ import random
 import math
 
 from cab.abm.cab_agent import CabAgent
+from cab.ca.cab_ca_hex import CAHex
 
 from abm.ss_genetics import Chromosome
 
@@ -76,11 +77,13 @@ class SSAgent(CabAgent):
                     best_cells.append(cell)
 
         result_cell = random.choice(best_cells)
-        # if self.vision > 1:
-        #     _q, _r = CAHex.get_cell_in_direction(ca.ca_grid[self.x, self.y], result_cell)
-        #     return ca.ca_grid[_q, _r]
-        # else:
-        # return result_cell
+
+        # TODO: In case the target cell is not directly adjacent, find an adjacent cell that leads into its direction.
+        # TODO: Make sure to pick one adjacent cell that is NOT currently occupied. Maybe calculate a path.
+        # if self.vision > 1 and CAHex.cube_distance(ca.ca_grid[self.x, self.y], result_cell) > 1:
+        #     next_in_direction = CAHex.get_cell_in_direction(ca.ca_grid[self.x, self.y], result_cell)
+        #     result_cell = ca.ca_grid[next_in_direction]
+
         self.move_to(result_cell)
         self.eat_from(result_cell)
 
@@ -130,7 +133,7 @@ class SSAgent(CabAgent):
         self.sugar -= self.meta_sugar
         self.spice -= self.meta_spice
         if self.sugar <= 0 or self.spice <= 0:
-            self.die(agent_positions)
+            self.die()
 
     def r2_procreate(self, abm, ca):
         neighborhood = ca.get_agent_neighborhood(self.x, self.y, 1)
@@ -168,6 +171,7 @@ class SSAgent(CabAgent):
                     # Update the abm that it has to schedule a new agent.
                     abm.add_agent(child)
                     # return child
+                    print('Procreation successful!')
 
     def r3_trading(self, ca, abm):
         """
@@ -296,12 +300,11 @@ class SSAgent(CabAgent):
         for d in eliminated:
             del(self.diseases[d])
 
-    def die(self, agent_positions):
+    def die(self):
         """
         As the name suggests, this method is to be executed upon the agent's death.
         """
         # Remove myself from the world
-        del(agent_positions[self.x, self.y])
         self.dead = True
         # Inherit my wealth to all my kids
         if self.children:

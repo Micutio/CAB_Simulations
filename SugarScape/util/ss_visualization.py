@@ -31,7 +31,7 @@ class Visualizer(Visualization):
 
     def draw_agent_w_color(self, agent, color):
         # print(agent.x, agent.y)
-        if agent.x != None and agent.y != None and not agent.dead:
+        if agent.x is not None and agent.y is not None and not agent.dead:
             radius = int(agent.size / 1.5)
 
             horiz = self.gc.CELL_SIZE * 2 * (math.sqrt(3) / 2)
@@ -55,7 +55,7 @@ class Visualizer(Visualization):
         """
         red, green, blue = Visualizer.calculate_cell_color(cell, self.gc)
         # print(red, green, blue)
-        if cell.state == True:
+        if cell.state:
             pygame.gfxdraw.filled_polygon(self.surface, cell.corners, (200, 200, 200))
         else:
             pygame.gfxdraw.filled_polygon(self.surface, cell.corners, (red, green, blue))
