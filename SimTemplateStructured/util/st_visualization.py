@@ -19,23 +19,23 @@ class ExampleVisualizer(Visualization):
     This class incorporates all methods necessary for visualizing the simulation.
     """
 
-    def __init__(self, gc, surface, sys):
+    def __init__(self, gc, surface, cab_core):
         """
         Initializes the visualization and passes the surface object on which to draw.
         :param surface: Pygame surface object.
         """
-        super().__init__(gc, surface, sys)
+        super().__init__(gc, surface, cab_core)
         self.gc = gc
 
-    def clone(self, surface, cab_sys):
+    def clone(self, surface, cab_core):
         """
         Cloning method. This needs to be changed only if the Visualizer
         constructor requires additional information at runtime.
         :param surface: Pygame screen object.
-        :param cab_sys: Complex Automaton System object.
+        :param cab_core: Complex Automaton Core object.
         :return: Instance of Visualizer class.
         """
-        return ExampleVisualizer(self.gc, surface, cab_sys)
+        return ExampleVisualizer(self.gc, surface, cab_core)
 
     def draw_agent(self, agent):
         """

@@ -175,9 +175,9 @@ class SSAgent(CabAgent):
                     m.children.append(child)
                     # Update the abm that it has to schedule a new agent.
                     abm.add_agent(child)
-                    print('me: {0},{1}'.format(self.x, self.y))
-                    print('she: {0},{1}'.format(m.x, m.y))
-                    print('it: {0},{1}'.format(child.x, child.y))
+                    # print('me: {0},{1}'.format(self.x, self.y))
+                    # print('she: {0},{1}'.format(m.x, m.y))
+                    # print('it: {0},{1}'.format(child.x, child.y))
 
     def r3_trading(self, ca, abm):
         """

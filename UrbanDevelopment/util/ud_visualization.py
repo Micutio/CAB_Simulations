@@ -12,19 +12,19 @@ class Visualizer(Visualization):
     This class incorporates all methods necessary for visualizing the urban development simulation.
     """
 
-    def __init__(self, gc, surface, sys):
+    def __init__(self, gc, surface, cab_core):
         """
         Initializes the visualization and passes the surface on which to draw.
         :param surface: Pygame surface object.
         """
         # TODO: Comment what the modes do, for better overview.
-        super().__init__(gc, surface, sys)
+        super().__init__(gc, surface, cab_core)
         self.draw_agent_mode = 1
         self.draw_cell_mode = 1
         self.gc = gc
 
-    def clone(self, surface, cab_sys):
-        return Visualizer(self.gc, surface, cab_sys)
+    def clone(self, surface, cab_core):
+        return Visualizer(self.gc, surface, cab_core)
 
     def draw_agent(self, agent):
         if agent.id == 'hive':
@@ -60,13 +60,10 @@ class Visualizer(Visualization):
         """
         green = 42 + int(213 * (cell.pheromones["hive"] / self.gc.MAX_PHEROMONE))
         blue = 48 + int(207 * (cell.pheromones["food"] / self.gc.MAX_PHEROMONE))
-        red = 34 #+ int((green + blue) / 2)
+        red = 34  # + int((green + blue) / 2)
 
         pygame.gfxdraw.filled_polygon(self.surface, cell.corners, (red, green, blue))
         if self.gc.DISPLAY_GRID:
             pygame.gfxdraw.aapolygon(self.surface, cell.corners, (190, 190, 190))
         else:
             pygame.gfxdraw.aapolygon(self.surface, cell.corners, (red, green, blue))
-        return
-
-        return

@@ -79,11 +79,11 @@ class GolCell(CellRect):
 
 
 class GolIO(InputHandler):
-    def __init__(self, cab_sys):
-        super().__init__(cab_sys)
+    def __init__(self, cab_core):
+        super().__init__(cab_core)
 
-    def clone(self, cab_sys):
-        return GolIO(cab_sys)
+    def clone(self, cab_core):
+        return GolIO(cab_core)
 
     def custom_mouse_action(self, button):
         # Click on left mouse button.
@@ -104,11 +104,11 @@ class GolIO(InputHandler):
 
 
 class GolVis(Visualization):
-    def __init__(self, global_const, sys,  screen):
-        super().__init__(global_const, sys, screen)
+    def __init__(self, global_const, cab_core,  screen):
+        super().__init__(global_const, cab_core, screen)
 
-    def clone(self, cab_sys, screen):
-        return GolVis(self.gc, cab_sys, screen)
+    def clone(self, cab_core, screen):
+        return GolVis(self.gc, cab_core, screen)
 
     def draw_cell(self, cell):
         """

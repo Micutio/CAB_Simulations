@@ -86,11 +86,11 @@ class FlowCell(CellHex):
 
 
 class FlowIO(InputHandler):
-    def __init__(self, cab_sys):
-        super().__init__(cab_sys)
+    def __init__(self, cab_core):
+        super().__init__(cab_core)
 
-    def clone(self, cab_sys):
-        return FlowIO(cab_sys)
+    def clone(self, cab_core):
+        return FlowIO(cab_core)
 
     def custom_mouse_action(self, button):
         # Click on left mouse button.
@@ -116,8 +116,8 @@ class FlowVis(Visualization):
     def __init__(self, global_const, sys,  screen):
         super().__init__(global_const, sys, screen)
 
-    def clone(self, cab_sys, screen):
-        return FlowVis(self.gc, cab_sys, screen)
+    def clone(self, cab_core, screen):
+        return FlowVis(self.gc, cab_core, screen)
 
     def draw_cell(self, cell):
         """

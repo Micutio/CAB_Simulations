@@ -52,13 +52,13 @@ class AntAgent(CabAgent):
         self.directions = [(1,  0), (1, -1), ( 0, -1), (-1,  0), (-1, 1), ( 0, 1)]
         self.current_dir = random.randint(0, 5)
 
-    def perceive_and_act(self, ca, abm):
+    def perceive_and_act(self, abm, ca):
         """
         Perceiving the environment and act according to the rules
         """
         self.prev_x = self.x
         self.prev_y = self.y
-        neighborhood = ca.get_agent_neighborhood(abm.agent_locations, self.x, self.y, 1)
+        neighborhood = ca.get_agent_neighborhood(self.x, self.y, 1)
 
         self.forage(neighborhood)
 
@@ -108,7 +108,7 @@ class AntAgent(CabAgent):
         elif self.current_dir == 0:
             possible_dirs = [5, 0, 1]
         else:
-            possible_dirs = [self.current_dir -1, self.current_dir, self.current_dir + 1]
+            possible_dirs = [self.current_dir - 1, self.current_dir, self.current_dir + 1]
 
         for i in possible_dirs:
             d = self.directions[i]
@@ -116,7 +116,7 @@ class AntAgent(CabAgent):
             _y = self.y + d[1]
             if (_x, _y) in neighborhood:
                 cell = neighborhood[_x, _y]
-                if cell[0].pheromones[target_ph] > 0:  # and (not cell[1] or len(cell[1]) < 10):
+                if cell[0].pheromones[target_ph] > 0.00:  # and (not cell[1] or len(cell[1]) < 10):
                     ph = cell[0].pheromones[target_ph]
                     if ph > max_ph:
                         best_cell = cell
@@ -127,8 +127,9 @@ class AntAgent(CabAgent):
                 else:
                     backup_list.append((cell, i))
         if result_list:
-            if random.random() < 0.01:
+            if random.random() < 0.10:
                 choice = AntAgent.weighted_choice(result_list)
+                # choice = random.choice(result_list)
                 result = choice[0]
                 self.current_dir = choice[1]
             else:
@@ -141,6 +142,8 @@ class AntAgent(CabAgent):
             # print('Ant Error: no cells found to move to!')
             self.current_dir = AntAgent.get_opposite_direction(self.current_dir)
             return self.get_cell_with_pheromone(target_ph, neighborhood)
+
+        # Add a small random factor to the movement.
         return result
 
     def drop_pheromones(self, target_ph, cell):

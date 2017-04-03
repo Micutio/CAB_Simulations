@@ -19,17 +19,17 @@ class ExampleInputHandler(InputHandler):
     """
     This class handles all user input to the simulation and output back to the user as well.
     """
-    def __init__(self, cab_sys):
-        super().__init__(cab_sys)
+    def __init__(self, cab_core):
+        super().__init__(cab_core)
 
-    def clone(self, cab_sys):
+    def clone(self, cab_core):
         """
         The cloning method only needs to be overridden if the constructor
         requires additional information when called at runtime. (So, almost never.)
-        :param cab_sys: Instance of the Complex Automaton System class.
+        :param cab_core: Instance of the Complex Automaton Core class.
         :return: Initialized instance of ExampleInputHandler
         """
-        return ExampleInputHandler(cab_sys)
+        return ExampleInputHandler(cab_core)
 
     def custom_keyboard_action(self, active_key):
         """

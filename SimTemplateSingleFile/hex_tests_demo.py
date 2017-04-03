@@ -74,8 +74,8 @@ class SimpleAgent(CabAgent):
 
 
 class SimpleIO(InputHandler):
-    def __init__(self, cab_sys):
-        super().__init__(cab_sys)
+    def __init__(self, cab_core):
+        super().__init__(cab_core)
         self.dist = 1
         self.show_direction_state = 0
         self.cell_a = None
@@ -83,8 +83,8 @@ class SimpleIO(InputHandler):
         self.cell_c = None
         self.highlighted_cells = []
 
-    def clone(self, cab_sys):
-        return SimpleIO(cab_sys)
+    def clone(self, cab_core):
+        return SimpleIO(cab_core)
 
     def custom_mouse_action(self, button):
         # Click on left mouse button.
@@ -174,8 +174,8 @@ class SimpleVis(Visualization):
     def __init__(self, global_const, sys,  screen):
         super().__init__(global_const, sys, screen)
 
-    def clone(self, cab_sys, screen):
-        return SimpleVis(self.gc, cab_sys, screen)
+    def clone(self, cab_core, screen):
+        return SimpleVis(self.gc, cab_core, screen)
 
     def draw_cell(self, cell):
         """

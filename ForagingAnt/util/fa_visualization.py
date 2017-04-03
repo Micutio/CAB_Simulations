@@ -12,19 +12,19 @@ class Visualizer(Visualization):
     This class incorporates all methods necessary for visualizing the simulation.
     """
 
-    def __init__(self, gc, surface, sys):
+    def __init__(self, gc, surface, cab_core):
         """
         Initializes the visualization and passes the surface on which to draw.
         :param surface: Pygame surface object.
         """
         # TODO: Comment what the modes do, for better overview.
-        super().__init__(gc, surface, sys)
+        super().__init__(gc, surface, cab_core)
         self.draw_agent_mode = 1
         self.draw_cell_mode = 1
         self.gc = gc
 
-    def clone(self, surface, cab_sys):
-        return Visualizer(self.gc, surface, cab_sys)
+    def clone(self, surface, cab_core):
+        return Visualizer(self.gc, surface, cab_core)
 
     def draw_agent(self, agent):
         if agent.id == 'hive':

@@ -1,7 +1,7 @@
+from cab.cab_global_constants import GlobalConstants
+
 __author__ = 'Michael Wagner'
 __version__ = '1.0'
-
-from cab.cab_global_constants import GlobalConstants
 
 
 class GC(GlobalConstants):
@@ -14,7 +14,7 @@ class GC(GlobalConstants):
         ################################
         self.RUN_SIMULATION = False
         self.TIME_STEP = 0
-        self.ONE_AGENT_PER_CELL = True
+        self.ONE_AGENT_PER_CELL = False
         ################################
         #        ABM CONSTANTS         #
         ################################
@@ -29,7 +29,7 @@ class GC(GlobalConstants):
         self.CELL_SIZE = 7
         self.GRID_WIDTH = self.DIM_X * self.CELL_SIZE
         self.GRID_HEIGHT = self.DIM_Y * self.CELL_SIZE
-        self.DISPLAY_GRID = True
+        self.DISPLAY_GRID = False
         ################################
         #  SIMULATION SPEC. CONSTANTS  #
         ################################
