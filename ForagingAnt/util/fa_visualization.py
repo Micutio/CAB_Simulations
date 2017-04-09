@@ -26,6 +26,15 @@ class Visualizer(Visualization):
     def clone(self, surface, cab_core):
         return Visualizer(self.gc, surface, cab_core)
 
+    def render_simulation(self):
+        draw_cell = self.draw_cell
+        for c in list(self.ca.ca_grid.values()):
+            draw_cell(c)
+        draw_agent = self.draw_agent
+        for a in self.abm.agent_set:
+            draw_agent(a)
+        pygame.display.flip()
+
     def draw_agent(self, agent):
         if agent.id == 'hive':
             self.draw_agent_w_color(agent, (100, 0, 255))

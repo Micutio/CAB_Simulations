@@ -1,3 +1,11 @@
+from cab.cab_system import ComplexAutomaton
+
+from abm.ud_agent import UrbanAgent
+from ca.ud_cell import WorldCell
+from ud_global_constants import GC
+from util.ud_io_handling import EventHandler
+from util.ud_visualization import Visualizer
+
 """
 Main module of the urban development simulation.
 This shall be used to experiment with growth models of cities or urban areas in
@@ -22,14 +30,6 @@ Idea of v1.0:
     |--> flow of goods and people
 
 """
-
-from cab.cab_system import ComplexAutomaton
-
-from abm.ud_agent import UrbanAgent
-from ca.ud_cell import WorldCell
-from ud_global_constants import GC
-from util.ud_io_handling import EventHandler
-from util.ud_visualization import Visualizer
 
 __author__ = 'Michael Wagner'
 __version__ = '1.0'

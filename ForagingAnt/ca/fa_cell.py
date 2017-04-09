@@ -51,3 +51,8 @@ class WorldCell(CellHex):
         self.neighbor_pheromones = {"hive": 0, "food": 0}
         self.last_neighbor_max_pheromone = self.neighbor_max_pheromone
         self.neighbor_max_pheromone = {"hive": 0, "food": 0}
+
+        green = 42 + int(213 * (self.pheromones["hive"] / self.gc.MAX_PHEROMONE))
+        blue = 48 + int(207 * (self.pheromones["food"] / self.gc.MAX_PHEROMONE))
+        red = 34  # + int((green + blue) / 2)
+        self.color = (green, blue, red)
