@@ -2,6 +2,7 @@ import pygame
 import math
 from cab.util.cab_visualization import Visualization
 
+from util.fa_io_handling import EventHandler
 
 __author__ = 'Michael Wagner'
 __version__ = '1.0'
@@ -12,19 +13,20 @@ class Visualizer(Visualization):
     This class incorporates all methods necessary for visualizing the simulation.
     """
 
-    def __init__(self, gc, surface, cab_core):
+    def __init__(self, gc, cab_core):
         """
         Initializes the visualization and passes the surface on which to draw.
-        :param surface: Pygame surface object.
+        :param cab_core: Reference to the Complex Automaton core class.
         """
         # TODO: Comment what the modes do, for better overview.
-        super().__init__(gc, surface, cab_core)
+        super().__init__(gc, cab_core)
         self.draw_agent_mode = 1
         self.draw_cell_mode = 1
         self.gc = gc
+        self.io_handler = EventHandler(cab_core)
 
-    def clone(self, surface, cab_core):
-        return Visualizer(self.gc, surface, cab_core)
+    def clone(self, cab_core):
+        return Visualizer(self.gc, cab_core)
 
     def render_simulation(self):
         draw_cell = self.draw_cell
