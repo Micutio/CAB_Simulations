@@ -4,6 +4,8 @@ Module containing the cell definition for the ant world.
 
 from cab.ca.cab_cell import CellHex
 
+from abm.fa_agent import HiveAgent, FoodAgent
+
 __author__ = 'Michael Wagner'
 __version__ = '1.0'
 
@@ -56,3 +58,9 @@ class WorldCell(CellHex):
         blue = 48 + int(207 * (self.pheromones["food"] / self.gc.MAX_PHEROMONE))
         red = 34  # + int((green + blue) / 2)
         self.color = (green, blue, red)
+
+    def on_lmb_click(self, abm, ca):
+        abm.add_agent(HiveAgent(self.x, self.y, self.gc))
+
+    def on_rmb_click(self, abm, ca):
+        abm.add_agent(FoodAgent(self.x, self.y, self.gc))
