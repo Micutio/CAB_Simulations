@@ -61,6 +61,8 @@ class WorldCell(CellHex):
 
     def on_lmb_click(self, abm, ca):
         abm.add_agent(HiveAgent(self.x, self.y, self.gc))
+        abm.schedule_new_agents()
 
     def on_rmb_click(self, abm, ca):
         abm.add_agent(FoodAgent(self.x, self.y, self.gc))
+        abm.schedule_new_agents()

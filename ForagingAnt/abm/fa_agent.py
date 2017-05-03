@@ -13,7 +13,7 @@ class HiveAgent(CabAgent):
         self.id = "hive"
         self.max_ants = gc.MAX_ANTS
         self.food = 0
-        self.color = (0, 90, 255)
+        self.color = (90, 0, 255)
         self.dead = False
         self.spawned = 0
         
@@ -29,7 +29,7 @@ class FoodAgent(CabAgent):
         super().__init__(x, y, gc)
         self.id = "food"
         self.food = gc.MAX_FOOD
-        self.color = (0, 255, 255)
+        self.color = (50, 255, 0)
         self.dead = False
 
     def perceive_and_act(self, ca, agent_list):
@@ -51,7 +51,7 @@ class AntAgent(CabAgent):
         self.food = 1
         self.has_food = False
         self.dead = False
-        self.color = (0, 200, 150)
+        self.color = (0, 175, 200)
         self.directions = [(1,  0), (1, -1), ( 0, -1), (-1,  0), (-1, 1), ( 0, 1)]
         self.current_dir = random.randint(0, 5)
 
