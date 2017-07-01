@@ -21,6 +21,10 @@ lead to an organic seeming behavior and lively little anthills.
 
 
 
-## Sugarscape [Under Construction]
+## Sugarscape [Alpha Version, Under Construction]
 
 The Sugarscape is a world of sugar and spice. Agents will roam the land and harvest the resources to stay alive. Agents can mate and create offspring that will carry on their genes. Simple rules allow for complex behavior, leading to migrations, diseases, population fluctuations, trading and more.
+
+## Urban Development [Planned]
+
+Urban Development will explore organic growth of cities or other urban ecologies by using the RICO model, whereby urban landuse is divided into three principal designations: residential, industrial and commercial. The ultimate goal will be to find non-complex rules that lead an intial seed, of one or more of these landuses, to grow into a plausible city shape over time.
