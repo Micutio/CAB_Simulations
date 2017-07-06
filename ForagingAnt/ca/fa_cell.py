@@ -21,8 +21,8 @@ class WorldCell(CellHex):
         self.evaporation = gc.EVAPORATION
         self.max_ph = gc.MAX_PHEROMONE
         self.pheromones = {"hive": 0, "food": 0}
-        #self.neighbor_pheromones = {"hive": 0, "food": 0}
-        #self.num_neighbors = 0
+        # self.neighbor_pheromones = {"hive": 0, "food": 0}
+        # self.num_neighbors = 0
         self.num_neighbors = 0
         self.neighbor_pheromones = {"hive": 0, "food": 0}
         self.neighbor_max_pheromone = {"hive": 0, "food": 0}
