@@ -11,8 +11,6 @@ import random
 from cab.ca.cab_cell import CellHex
 from cab.cab_global_constants import GlobalConstants
 from cab.cab_system import ComplexAutomaton
-from cab.util.cab_input_handling import InputHandler
-from cab.util.cab_visualization import Visualization
 
 
 __author__ = 'Michael Wagner'
@@ -22,7 +20,7 @@ __version__ = '1.0'
 class GC(GlobalConstants):
     def __init__(self):
         super().__init__()
-        self.VERSION = 'version: 08-2015'
+        self.VERSION = 'version: 07-2017'
         ################################
         #     SIMULATION CONSTANTS     #
         ################################
@@ -31,6 +29,7 @@ class GC(GlobalConstants):
         ################################
         #         CA CONSTANTS         #
         ################################
+        self.DISPLAY_GRID = True
         self.USE_HEX_CA = True
         self.USE_MOORE_NEIGHBORHOOD = True
         self.USE_CA_BORDERS = True
@@ -50,7 +49,7 @@ class GC(GlobalConstants):
 class GolCell(CellHex):
     def __init__(self, x, y, global_constants):
         super().__init__(x, y, global_constants)
-        self.alive = 0
+        self.alive = False
         self.next_state = 0
         # The rules:
         #   cell will be [b]orn if it has the following amount of neighbors
@@ -61,80 +60,38 @@ class GolCell(CellHex):
     def sense_neighborhood(self):
         _neighs_alive = 0
         for cell in self.neighbors:
-            if cell.alive == 1 and not cell.is_border:
+            if cell.alive and not cell.is_border:
                 _neighs_alive += 1
 
-        if self.alive == 0 and _neighs_alive in self.b:
+        if not self.alive and _neighs_alive in self.b:
             self.next_state = 1
-        elif self.alive == 1 and _neighs_alive in self.s:
+        elif self.alive and _neighs_alive in self.s:
             self.next_state = 1
         else:
             self.next_state = 0
 
     def update(self):
         self.alive = self.next_state
+        if self.alive:
+            self.color = (255, 255, 255)
+        else:
+            self.color = self.gc.DEFAULT_CELL_COLOR
 
     def clone(self, x, y):
         return GolCell(x, y, self.gc)
 
+    def on_lmb_click(self, abm, ca):
+        self.alive = True
+        self.color = (255, 255, 255)
 
-class GolIO(InputHandler):
-    def __init__(self, cab_core):
-        super().__init__(cab_core)
-
-    def clone(self, cab_core):
-        return GolIO(cab_core)
-
-    def custom_mouse_action(self, button):
-        # Click on left mouse button.
-        if button == 1:
-            cell_x, cell_y = self.get_mouse_hex_coords()
-            self.sys.ca.ca_grid[cell_x, cell_y].alive = 1 - self.sys.ca.ca_grid[cell_x, cell_y].alive
-
-        # Click on right mouse button
-        elif button == 3:
-            for cell in list(self.sys.ca.ca_grid.values()):
-                if random.random() > 0.65:
-                    cell.alive = 1
-                else:
-                    cell.alive = 0
-
-
-class GolVis(Visualization):
-    def __init__(self, global_const, sys,  screen):
-        super().__init__(global_const, sys, screen)
-
-    def clone(self, cab_core, screen):
-        return GolVis(self.gc, cab_core, screen)
-
-    def draw_cell(self, cell):
-        """
-        Simple exemplary visualization. Draw cell in white.
-        """
-        if cell is None:
-            pass
-        else:
-            if cell.is_border:
-                pygame.gfxdraw.filled_polygon(self.surface, cell.get_corners(), (190, 190, 190))
-            else:
-                if cell.alive:
-                    red = 90
-                    green = 90
-                    blue = 90
-                else:
-                    red = 220
-                    green = 220
-                    blue = 220
-                pygame.gfxdraw.filled_polygon(self.surface, cell.get_corners(), (red, green, blue))
-                pygame.gfxdraw.aapolygon(self.surface, cell.get_corners(), (190, 190, 190))
-
+    def on_rmb_click(self, abm, ca):
+        self.alive = False
+        self.color = self.gc.DEFAULT_CELL_COLOR
 
 if __name__ == '__main__':
     gc = GC()
     pc = GolCell(0, 0, gc)
-    ph = GolIO(None)
-    pv = GolVis(gc, None, None)
-    simulation = ComplexAutomaton(gc, proto_cell=pc, proto_handler=ph, proto_visualizer=pv)
+    simulation = ComplexAutomaton(gc, proto_cell=pc)
     simulation.run_main_loop()
 
     # Just in case we need to run the simulation in debug mode.
