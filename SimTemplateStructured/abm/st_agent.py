@@ -39,3 +39,30 @@ class ExampleAgent(CabAgent):
     # This is the minimum configuration for an agent. It does not need more than
     # to implement the perceive_and_act method from CabAgent to perform actions
     # in the simulation.
+    #
+    # There are additional methods designed for interacting with simulation components
+    # via user input, which can be redefined just like init and perceive and act.
+    
+    def on_lmb_click(self, abm, ca):
+        """
+        Executed when the mouse is pointed at the agent and left mouse button clicked.
+        """
+        pass
+
+    def on_rmb_click(self, abm, ca):
+        """
+        Executed when the mouse is pointed at the agent and right mouse button clicked.
+        """
+        pass
+
+    def on_mouse_scroll_up(self, abm, ca):
+        """
+        Executed when the mouse is pointed at the agent and wheel scrolled up.
+        """
+        pass
+
+    def on_mouse_scroll_down(self, abm, ca):
+        """
+        Executed when the mouse is pointed at the agent and wheel scrolled down.
+        """
+        pass

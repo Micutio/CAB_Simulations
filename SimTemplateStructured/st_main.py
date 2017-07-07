@@ -9,8 +9,6 @@ from cab.cab_system import ComplexAutomaton
 from st_global_constants import ExampleGC
 from ca.st_cell import ExampleCell
 from abm.st_agent import ExampleAgent
-from util.st_io_handling import ExampleInputHandler
-from util.st_visualization import ExampleVisualizer
 
 
 __author__ = 'Michael Wagner'
@@ -26,11 +24,9 @@ if __name__ == '__main__':
     gc = ExampleGC()
     pc = ExampleCell(0, 0, gc)
     pa = ExampleAgent(0, 0, gc)
-    ph = ExampleInputHandler(None)
-    pv = ExampleVisualizer(gc, None, None)
 
     # 2. initialize the complex automaton system with the components
-    simulation = ComplexAutomaton(gc, proto_agent=pa, proto_cell=pc, proto_handler=ph, proto_visualizer=pv)
+    simulation = ComplexAutomaton(gc, proto_agent=pa, proto_cell=pc)
 
     # 3. run the complex automaton system
     simulation.run_main_loop()
