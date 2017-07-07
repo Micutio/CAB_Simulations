@@ -5,15 +5,12 @@ Uses the Complex Automaton Base.
 
 
 # External library imports.
-import pygame
 import numpy
 
 # CAB system imports.
 from cab.ca.cab_cell import CellHex
 from cab.cab_global_constants import GlobalConstants
 from cab.cab_system import ComplexAutomaton
-from cab.util.cab_input_handling import InputHandler
-from cab.util.cab_visualization import Visualization
 
 
 __author__ = 'Michael Wagner'
@@ -40,6 +37,7 @@ class GC(GlobalConstants):
         self.CELL_SIZE = 7  # How long/wide is one cell?
         self.GRID_WIDTH = self.DIM_X * self.CELL_SIZE
         self.GRID_HEIGHT = self.DIM_Y * self.CELL_SIZE
+        self.DISPLAY_GRID = True
         ################################
         #        ABM CONSTANTS         #
         ################################
@@ -80,92 +78,49 @@ class FlowCell(CellHex):
 
     def update(self):
         self.pressure = self.new_pressure
+        self.update_cell_color()
 
     def clone(self, x, y):
         return FlowCell(x, y, self.gc)
 
+    def on_lmb_click(self, abm, ca):
+        self.pressure = 50000
+        self.update_cell_color()
 
-class FlowIO(InputHandler):
-    def __init__(self, cab_core):
-        super().__init__(cab_core)
+    def on_rmb_click(self, abm, ca):
+        self.pressure = -50000
+        self.update_cell_color()
 
-    def clone(self, cab_core):
-        return FlowIO(cab_core)
-
-    def custom_mouse_action(self, button):
-        # Click on left mouse button.
-        if button == 1:
-            cell_x, cell_y = self.get_mouse_hex_coords()
-            self.sys.ca.ca_grid[cell_x, cell_y].pressure = 500000
-            # self.sys.ca.ca_grid[cell_x, cell_y].new_pressure = 10000
-        # Click on middle mouse button / mouse wheel
-        elif button == 2:
-            cell_x, cell_y = self.get_mouse_hex_coords()
-            self.sys.ca.ca_grid[cell_x, cell_y].pressure = -500000
-            # self.sys.ca.ca_grid[cell_x, cell_y].new_pressure = 10000
-
-        # Click on right mouse button
-        elif button == 3:
-            cell_x, cell_y = self.get_mouse_hex_coords()
-            self.sys.ca.ca_grid[cell_x, cell_y].is_solid = not self.sys.ca.ca_grid[cell_x, cell_y].is_solid
-            # self.sys.ca.ca_grid[cell_x, cell_y].pressure = -100
-            # print(self.sys.ca.ca_grid[cell_x, cell_y].pressure)
-
-
-class FlowVis(Visualization):
-    def __init__(self, global_const, sys,  screen):
-        super().__init__(global_const, sys, screen)
-
-    def clone(self, cab_core, screen):
-        return FlowVis(self.gc, cab_core, screen)
-
-    def draw_cell(self, cell):
+    def update_cell_color(self):
         """
         Simple exemplary visualization. Draw cell in white.
         """
-        if cell is None:
+        if self is None:
             pass
         else:
-            if cell.is_solid:
-                pygame.gfxdraw.filled_polygon(self.surface, cell.get_corners(), (255, 0, 0))
-            elif cell.is_border:
-                pygame.gfxdraw.filled_polygon(self.surface, cell.get_corners(), (150, 190, 100))
+            if self.is_solid:
+                self.color = (255, 0, 0)
+            elif self.is_border:
+                self.color = (150, 190, 100)
             else:
-                if cell.pressure > 100:
+                if self.pressure > 100:
                     red = 255
                     green = 255
                     blue = 255
-                elif cell.pressure < 0:
+                elif self.pressure < 0:
                     red = 0
                     green = 0
                     blue = 0
                 else:
-                    red = int((cell.pressure / 100) * 150)
-                    green = int((cell.pressure / 100) * 150)
-                    blue = int((cell.pressure / 100) * 255)
-                pygame.gfxdraw.filled_polygon(self.surface, cell.get_corners(), (red, green, blue))
-                pygame.gfxdraw.aapolygon(self.surface, cell.get_corners(), (255, 255, 255))
-
-    def highlight(self, cell):
-        """
-        Simple exemplary visualization. Draw cell in white.
-        """
-        counter = 0
-        for neigh in cell.neighbors:
-            counter += 1
-            crnrs = neigh.get_corners()
-            # pygame.draw.aalines(self.surface, (255, 255, 255), True, crnrs, 0)
-            # pygame.gfxdraw.filled_polygon(self.surface, crnrs, (0, 0, 0))
-            pygame.gfxdraw.filled_polygon(self.surface, crnrs, (255, 255, 0))
-        crnrs = cell.get_corners()
-        pygame.gfxdraw.filled_polygon(self.surface, crnrs, (60, 200, 0))
+                    red = int((self.pressure / 100) * 150)
+                    green = int((self.pressure / 100) * 150)
+                    blue = int((self.pressure / 100) * 255)
+                self.color = (red, green, blue)
 
 
 if __name__ == '__main__':
     gc = GC()
     pc = FlowCell(0, 0, gc)
-    ph = FlowIO(None)
-    pv = FlowVis(gc, None, None)
-    simulation = ComplexAutomaton(gc, proto_cell=pc, proto_handler=ph, proto_visualizer=pv)
+    simulation = ComplexAutomaton(gc, proto_cell=pc)
     simulation.run_main_loop()
     # cProfile.run("simulation.run_main_loop()")
