@@ -4,6 +4,8 @@ Module containing the cell definition for the ant world.
 
 from cab.ca.cab_cell import CellHex
 
+from abm.fa_agent import HiveAgent, FoodAgent
+
 __author__ = 'Michael Wagner'
 __version__ = '1.0'
 
@@ -19,8 +21,8 @@ class WorldCell(CellHex):
         self.evaporation = gc.EVAPORATION
         self.max_ph = gc.MAX_PHEROMONE
         self.pheromones = {"hive": 0, "food": 0}
-        #self.neighbor_pheromones = {"hive": 0, "food": 0}
-        #self.num_neighbors = 0
+        # self.neighbor_pheromones = {"hive": 0, "food": 0}
+        # self.num_neighbors = 0
         self.num_neighbors = 0
         self.neighbor_pheromones = {"hive": 0, "food": 0}
         self.neighbor_max_pheromone = {"hive": 0, "food": 0}
@@ -51,3 +53,16 @@ class WorldCell(CellHex):
         self.neighbor_pheromones = {"hive": 0, "food": 0}
         self.last_neighbor_max_pheromone = self.neighbor_max_pheromone
         self.neighbor_max_pheromone = {"hive": 0, "food": 0}
+
+        green = 42 + int(213 * (self.pheromones["hive"] / self.gc.MAX_PHEROMONE))
+        blue = 48 + int(207 * (self.pheromones["food"] / self.gc.MAX_PHEROMONE))
+        red = 34  # + int((green + blue) / 2)
+        self.color = (green, blue, red)
+
+    def on_lmb_click(self, abm, ca):
+        abm.add_agent(HiveAgent(self.x, self.y, self.gc))
+        abm.schedule_new_agents()
+
+    def on_rmb_click(self, abm, ca):
+        abm.add_agent(FoodAgent(self.x, self.y, self.gc))
+        abm.schedule_new_agents()
