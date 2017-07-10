@@ -1,7 +1,6 @@
-import random
 
 from cab.abm.cab_agent import CabAgent
-
+import cab.util.cab_rng
 
 __author__ = 'Michael Wagner'
 __version__ = '1.0'
@@ -16,7 +15,7 @@ class HiveAgent(CabAgent):
         self.color = (90, 0, 255)
         self.dead = False
         self.spawned = 0
-        
+
     def perceive_and_act(self, abm, ca):
         if self.spawned < self.max_ants:
             ant = AntAgent(self.x, self.y, self.gc)
@@ -33,9 +32,17 @@ class FoodAgent(CabAgent):
         self.dead = False
 
     def perceive_and_act(self, ca, agent_list):
+        if self.food < self.gc.MAX_FOOD:
+            print("[FoodAgent] food left: {}".format(self.food))
+        self.update_color()
         if self.food < 0:
             self.dead = True
         return
+
+    def update_color(self):
+        red = max(0, int((self.food / self.gc.MAX_FOOD) * 50))
+        green = max(0, int((self.food / self.gc.MAX_FOOD) * 255))
+        self.color = (red, green, 0)
 
 
 class AntAgent(CabAgent):
@@ -53,7 +60,7 @@ class AntAgent(CabAgent):
         self.dead = False
         self.color = (0, 175, 200)
         self.directions = [(1,  0), (1, -1), ( 0, -1), (-1,  0), (-1, 1), ( 0, 1)]
-        self.current_dir = random.randint(0, 5)
+        self.current_dir = get_RNG().randint(0, 5)
 
     def perceive_and_act(self, abm, ca):
         """
@@ -130,15 +137,15 @@ class AntAgent(CabAgent):
                 else:
                     backup_list.append((cell, i))
         if result_list:
-            if random.random() < 0.10:
+            if get_RNG().random() < 0.10:
                 choice = AntAgent.weighted_choice(result_list)
-                # choice = random.choice(result_list)
+                # choice = get_RNG().choice(result_list)
                 result = choice[0]
                 self.current_dir = choice[1]
             else:
                 result = best_cell
         elif backup_list:
-            choice = random.choice(backup_list)
+            choice = get_RNG().choice(backup_list)
             result = choice[0]
             self.current_dir = choice[1]
         else:
@@ -183,7 +190,7 @@ class AntAgent(CabAgent):
     def check_if_at_food(self, agents_at_cell):
         if agents_at_cell:
             for agent in agents_at_cell:
-                if agent.id == "food":
+                if agent.id == "food" and not agent.dead:
                     # print('found the food!')
                     agent.food -= self.food
                     self.has_food = True
@@ -191,7 +198,7 @@ class AntAgent(CabAgent):
     @staticmethod
     def weighted_choice(choices):
         total = sum(w for c, w, i in choices)
-        r = random.uniform(0, total)
+        r = get_RNG().uniform(0, total)
         up_to = 0
         for c, w, i in choices:
             if up_to + w > r:
