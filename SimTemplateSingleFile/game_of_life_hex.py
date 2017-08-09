@@ -5,12 +5,12 @@ Uses the Complex Automaton Base.
 
 # External library imports.
 import pygame
-import random
 
 # CAB system imports.
 from cab.ca.cab_cell import CellHex
 from cab.cab_global_constants import GlobalConstants
 from cab.cab_system import ComplexAutomaton
+import cab.util.cab_rng
 
 
 __author__ = 'Michael Wagner'

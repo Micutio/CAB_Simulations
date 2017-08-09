@@ -1,8 +1,8 @@
 import copy
-import random
 import math
 
 from cab.abm.cab_agent import CabAgent
+import cab.util.cab_rng
 
 from abm.ss_genetics import Chromosome
 
@@ -14,6 +14,7 @@ __version__ = '1.0'
 class SSAgent(CabAgent):
     def __init__(self, x, y, gc, su, sp, age, genomes):
         super().__init__(x, y, gc)
+        self.color = (255, 255, 255)
         self.vision = gc.VISION
         self.sugar = su
         self.spice = sp
@@ -81,7 +82,7 @@ class SSAgent(CabAgent):
                 elif welfare == max_w and dist == max_dist:
                     best_cells.append(cell)
 
-        result_cell = random.choice(best_cells)
+        result_cell = get_RNG().choice(best_cells)
 
         # TODO: In case the target cell is not directly adjacent, find an adjacent cell that leads into its direction.
         # TODO: Make sure to pick one adjacent cell that is NOT currently occupied. Maybe calculate a path.
@@ -149,13 +150,13 @@ class SSAgent(CabAgent):
             mates = [v[1] for v in list(neighborhood.values()) if not v[1] is False]
 
             if mates:
-                m = random.choice(mates)
+                m = get_RNG().choice(mates)
                 both_wealthy1 = (self.sugar >= self.init_sugar and m.sugar >= m.init_sugar)
                 both_wealthy2 = (self.spice >= self.init_spice and m.spice >= m.init_spice)
                 # All criteria is fulfilled to procreate!
                 if free_cells and m.is_fertile() and m.gender != self.gender and both_wealthy1 and both_wealthy2:
                     # Take one free cell to place Junior there.
-                    c = random.choice(free_cells)
+                    c = get_RNG().choice(free_cells)
                     n_x = c.x
                     n_y = c.y
                     # Give him / her initial resources
@@ -269,7 +270,7 @@ class SSAgent(CabAgent):
         for _, d in self.diseases.items():
             targets = [agent for (cell, agent) in self.neighbors if agent is not None and not agent.dead and not self.dead]
             if targets:
-                victim = random.choice(targets)
+                victim = get_RNG().choice(targets)
                 d.spread(victim)
 
         # Let the immune system build another instance
@@ -289,7 +290,7 @@ class SSAgent(CabAgent):
         if self.fertility[0] < self.age < self.fertility[1] and len(self.immune_system) <= 10:
             is_copy = copy.deepcopy(self.chromosome.immune_system)
             length = len(is_copy)
-            index = random.choice(range(length))
+            index = get_RNG().choice(range(length))
             is_copy[index] = 1 - is_copy[index]
             self.immune_system.append("".join(map(str, is_copy)))
 

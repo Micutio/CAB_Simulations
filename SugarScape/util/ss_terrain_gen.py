@@ -1,4 +1,4 @@
-import random
+import cab.util.cab_rng
 
 
 __author__ = 'Michael Wagner'
@@ -17,7 +17,7 @@ class TerrainGenerator:
         self.landscape = None
         self.factor = 10
         self.landscape = self.get_island_landscape()
-        
+
         # self.landscape = self.get_coastal_landscape()
 
     def get(self, x, y):
@@ -36,9 +36,9 @@ class TerrainGenerator:
         l2 = [[0 for _ in range(self.y_dim)] for _ in range(self.x_dim)]
         for j in range(self.y_dim):
             for i in range(self.x_dim):
-                # l1[i][j] = int(random.triangular(self.deepest, self.highest, 5))s
+                # l1[i][j] = int(get_RNG().triangular(self.deepest, self.highest, 5))s
                 mode = (((i + j) / 200) * 20) - 15
-                l1[i][j] = int(random.triangular(self.deepest + 2 * mode, self.highest + 2 * mode, mode))
+                l1[i][j] = int(get_RNG().triangular(self.deepest + 2 * mode, self.highest + 2 * mode, mode))
 
         for _ in range(self.smoothness):
             for j in range(self.y_dim):
@@ -75,7 +75,7 @@ class TerrainGenerator:
         for j in range(self.y_dim):
             for i in range(self.x_dim):
                 if (i + j) % self.factor == 0:
-                    last_rand = int(random.triangular(self.deepest, self.highest, self.water_level))
+                    last_rand = int(get_RNG().triangular(self.deepest, self.highest, self.water_level))
                 l1[i][j] = last_rand
 
         for _ in range(self.smoothness):
@@ -116,7 +116,7 @@ class TerrainGenerator:
                 except IndexError:
                     pass
         return l1
-    
+
     @staticmethod
     def two_hill_landscape():
         return [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2],

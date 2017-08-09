@@ -7,7 +7,7 @@ Credit to David Grotzky.
 __author__ = 'Michael Wagner'
 __version__ = '1.0'
 
-import random
+import cab.util.cab_rng
 
 
 # TODO: Implement proper immune system.
@@ -60,7 +60,7 @@ class Chromosome:
         init_sugar = Chromosome.choose_dominant_gene(self.get_genome_substring('init_sugar'))
         init_spice = Chromosome.choose_dominant_gene(self.get_genome_substring('init_spice'))
         vision = Chromosome.choose_dominant_gene(self.get_genome_substring('vision'))
-        gender = random.choice(self.get_genome_substring('gender'))
+        gender = get_RNG().choice(self.get_genome_substring('gender'))
         f1 = Chromosome.choose_dominant_gene(self.get_genome_substring('fertility_1'))
         f2 = Chromosome.choose_dominant_gene(self.get_genome_substring('fertility_2'))
         dying_age = Chromosome.choose_dominant_gene(self.get_genome_substring('dying_age'))
@@ -101,7 +101,7 @@ class Chromosome:
         dominant0 = strings[0].count('1') % 2 == 0
         dominant1 = strings[1].count('1') % 2 == 0
         if (dominant0 and dominant1) or (not (dominant0 or dominant1)):
-            return random.choice([strings[0], strings[1]])
+            return get_RNG().choice([strings[0], strings[1]])
         elif dominant1:
             return strings[0]
         else:
@@ -140,14 +140,14 @@ class Chromosome:
         # 1) Generate a random number (gaussian distributed) of
         # random indices which are then used to split the genes at the respective points.
         genome_size = len(genomes[0])
-        num_partitions = int(random.triangular(0, genome_size / 2, genome_size))
-        partitions = random.sample(range(genome_size), num_partitions)
+        num_partitions = int(get_RNG().triangular(0, genome_size / 2, genome_size))
+        partitions = get_RNG().sample(range(genome_size), num_partitions)
         partitions.sort()  # Now we have all our indices, and sorted.
         partitions.append(genome_size)  # Append the end of the string
         start = 0
         gamete = []
         for p in partitions:
-            i = random.choice([0, 1])
+            i = get_RNG().choice([0, 1])
             gamete.extend(genomes[i][start:p])
             start = p
         # 'gamete' is now a list of integers. Convert the ints to strings and join 'em all together.
@@ -160,24 +160,24 @@ class Chromosome:
         :return:
         """
         # Flip bit in genome
-        if random.random() < 0.005:
+        if get_RNG().random() < 0.005:
             length = len(self.genomes)
-            index = random.randrange(length)
+            index = get_RNG().randrange(length)
             l = list(self.genomes[0])
             l[index] = Chromosome.invert_bit(l[index])
             g1 = "".join(l)
 
-            index = random.randrange(length)
+            index = get_RNG().randrange(length)
             l = list(self.genomes[1])
             l[index] = Chromosome.invert_bit(l[index])
             g2 = "".join(l)
             self.genomes = (g1, g2)
 
         # Flip a bit in culture
-        if random.random() < 0.01:
+        if get_RNG().random() < 0.01:
             length = len(self.culture)
-            num_bits_changed = int(random.triangular(0, 1, length))
-            index = random.sample(range(length), num_bits_changed)
+            num_bits_changed = int(get_RNG().triangular(0, 1, length))
+            index = get_RNG().sample(range(length), num_bits_changed)
             for i in index:
                 self.culture[i] = 1 - self.culture[i]
 

@@ -1,6 +1,7 @@
-import random
+
 import math
 
+import cab.util.cab_rng
 
 __author__ = 'Michael Wagner'
 __version__ = '1.0'
@@ -19,7 +20,7 @@ class TerrainGenerator:
         self.factor = 35
         self.landscape = {}
         self.landscape = self.get_coastal_landscape()
-        
+
         # self.landscape = self.get_coastal_landscape()
 
     def get(self, x, y):
@@ -38,11 +39,11 @@ class TerrainGenerator:
         l2 = {}
         for j in range(self.height):
             for i in range(self.width):
-                # l1[i][j] = int(random.triangular(self.deepest, self.highest, 5))s
+                # l1[i][j] = int(get_RNG().triangular(self.deepest, self.highest, 5))s
                 q = i - math.floor(j / 2)
                 mode = (((i + j) / 200) * 5) + self.water_level
-                l1[q, j] = int(random.triangular(self.deepest + 2 * mode, self.highest + 2 * mode, mode))
-                # l1[i][j] = int(random.triangular(self.deepest + 2 * mode, self.highest + 2 * mode, mode))
+                l1[q, j] = int(get_RNG().triangular(self.deepest + 2 * mode, self.highest + 2 * mode, mode))
+                # l1[i][j] = int(get_RNG().triangular(self.deepest + 2 * mode, self.highest + 2 * mode, mode))
 
         for _ in range(self.smoothness):
             for j in range(self.height):
@@ -76,14 +77,14 @@ class TerrainGenerator:
         for j in range(self.height):
             for i in range(self.width):
                 q = i - math.floor(j / 2)
-                if random.randint(0, 100) < self.factor:
-                    c = random.choice([True, False])
+                if get_RNG().randint(0, 100) < self.factor:
+                    c = get_RNG().choice([True, False])
                     if c:
-                        # last_rand = int(random.triangular(self.deepest, self.highest, self.water_level))
+                        # last_rand = int(get_RNG().triangular(self.deepest, self.highest, self.water_level))
                     # l1[q, j] = last_rand
                         l1[q, j] = self.highest
                         for d in self.gc.HEX_DIRECTIONS:
-                            l1[q + d[0], j + d[1]] = int(random.triangular(self.water_level, self.highest, self.highest * 0.75))
+                            l1[q + d[0], j + d[1]] = int(get_RNG().triangular(self.water_level, self.highest, self.highest * 0.75))
                             # try:
                             #     l1[q + d[0], j + d[1]] = self.highest * 2
                             # except KeyError:
@@ -91,7 +92,7 @@ class TerrainGenerator:
                     else:
                         l1[q, j] = self.deepest
                         for d in self.gc.HEX_DIRECTIONS:
-                            l1[q + d[0], j + d[1]] = int(random.triangular(self.deepest, self.water_level, self.deepest * 0.75))
+                            l1[q + d[0], j + d[1]] = int(get_RNG().triangular(self.deepest, self.water_level, self.deepest * 0.75))
                 else:
                     l1[q, j] = self.water_level
 

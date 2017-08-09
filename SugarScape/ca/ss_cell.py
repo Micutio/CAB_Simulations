@@ -45,3 +45,19 @@ class WorldCell(CellHex):
             self.growth_cycle_count = 0
         else:
             self.growth_cycle_count += 1
+        self.calculate_cell_color()
+
+    def calculate_cell_color(self):
+        if self.max_sugar == 0:
+            normalized_su = 0
+        else:
+            normalized_su = self.sugar / self.gc.MAX_SUGAR
+        if self.max_spice == 0:
+            normalized_sp = 0
+        else:
+            normalized_sp = self.spice / self.gc.MAX_SUGAR
+
+        red = int(min(max(0, 150 * normalized_sp), 255))
+        green = int(min(max(0, 200 * normalized_su), 255))
+        blue = 0
+        self.color = (red, green, blue)
