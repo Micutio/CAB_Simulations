@@ -2,7 +2,7 @@ import copy
 import math
 
 from cab.abm.cab_agent import CabAgent
-import cab.util.cab_rng
+from cab.util.cab_rng import get_RNG
 
 from abm.ss_genetics import Chromosome
 

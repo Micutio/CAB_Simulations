@@ -10,7 +10,7 @@ import operator
 from cab.cab_global_constants import GlobalConstants
 from cab.abm.cab_agent import CabAgent
 from cab.ca.cab_ca_hex import CAHex
-import cab.util.cab_rng
+from cab.util.cab_rng import get_RNG
 
 from abm.ss_genetics import Chromosome
 

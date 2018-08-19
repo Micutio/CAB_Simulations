@@ -7,7 +7,7 @@ Credit to David Grotzky.
 __author__ = 'Michael Wagner'
 __version__ = '1.0'
 
-import cab.util.cab_rng
+from cab.util.cab_rng import get_RNG
 
 
 # TODO: Implement proper immune system.
