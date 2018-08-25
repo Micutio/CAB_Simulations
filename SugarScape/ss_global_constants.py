@@ -9,6 +9,7 @@ class GC(GlobalConstants):
         super().__init__()
         self.VERSION = '03-2017'
         self.TITLE = 'Sugarscape'
+        self.gui = "PyGame"  # Options: "TK", "PyGame"
         ################################
         #     SIMULATION CONSTANTS     #
         ################################
@@ -18,7 +19,7 @@ class GC(GlobalConstants):
         ################################
         #        ABM CONSTANTS         #
         ################################
-        self.START_AGENTS = 400
+        self.START_AGENTS = 1
         self.VISION = 2
         # self.METABOLISM_SUGAR = 2
         # self.METABOLISM_SPICE = 2
