@@ -1,4 +1,4 @@
-from cab.cab_system import ComplexAutomaton
+from cab.complex_automaton import ComplexAutomaton
 
 from abm.ud_agent import UrbanAgent
 from ca.ud_cell import WorldCell

@@ -1,8 +1,8 @@
 import copy
 import math
 
-from cab.abm.cab_agent import CabAgent
-from cab.util.cab_rng import get_RNG
+from cab.abm.agent import CabAgent
+from cab.util.rng import get_RNG
 
 from abm.ss_genetics import Chromosome
 

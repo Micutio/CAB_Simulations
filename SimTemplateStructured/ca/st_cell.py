@@ -3,7 +3,7 @@ Module containing the example cell definition.
 """
 
 # Internal library imports.
-from cab.ca.cab_cell import CellHex
+from cab.ca.cell import CellHex
 
 __author__ = 'Michael Wagner'
 __version__ = '1.0'

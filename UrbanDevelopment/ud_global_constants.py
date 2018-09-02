@@ -1,7 +1,7 @@
 __author__ = 'Michael Wagner'
 __version__ = '1.0'
 
-from cab.cab_global_constants import GlobalConstants
+from cab.global_constants import GlobalConstants
 
 
 class GC(GlobalConstants):

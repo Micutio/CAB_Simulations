@@ -1,6 +1,6 @@
 
-from cab.abm.cab_agent import CabAgent
-from cab.util.cab_rng import get_RNG
+from cab.abm.agent import CabAgent
+from cab.util.rng import get_RNG
 
 __author__ = 'Michael Wagner'
 __version__ = '1.0'

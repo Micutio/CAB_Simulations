@@ -1,7 +1,7 @@
 __author__ = 'Michael Wagner'
 __version__ = '1.0'
 
-from cab.cab_global_constants import GlobalConstants
+from cab.global_constants import GlobalConstants
 
 
 class GC(GlobalConstants):
@@ -19,7 +19,7 @@ class GC(GlobalConstants):
         ################################
         #        ABM CONSTANTS         #
         ################################
-        self.START_AGENTS = 1
+        self.START_AGENTS = 200
         self.VISION = 2
         # self.METABOLISM_SUGAR = 2
         # self.METABOLISM_SPICE = 2

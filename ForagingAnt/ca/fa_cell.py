@@ -2,7 +2,7 @@
 Module containing the cell definition for the ant world.
 """
 
-from cab.ca.cab_cell import CellHex
+from cab.ca.cell import CellHex
 
 from abm.fa_agent import HiveAgent, FoodAgent
 

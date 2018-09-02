@@ -2,7 +2,7 @@
 Insert a module description
 """
 
-from cab.abm.cab_agent import CabAgent
+from cab.abm.agent import CabAgent
 
 
 __author__ = 'Michael Wagner'

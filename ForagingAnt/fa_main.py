@@ -2,7 +2,7 @@
 Main module of the foraging ant simulation.
 """
 
-from cab.cab_system import ComplexAutomaton
+from cab.complex_automaton import ComplexAutomaton
 
 from abm.fa_agent import HiveAgent
 from ca.fa_cell import WorldCell

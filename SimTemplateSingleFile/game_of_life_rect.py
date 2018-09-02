@@ -3,14 +3,10 @@ Main module of the Gol and Pressure Demo.
 Uses the Complex Automaton Base.
 """
 
-# External library imports.
-import pygame
-
 # CAB system imports.
-from cab.ca.cab_cell import CellRect
-from cab.cab_global_constants import GlobalConstants
-from cab.cab_system import ComplexAutomaton
-import cab.util.cab_rng
+from cab.ca.cell import CellRect
+from cab.global_constants import GlobalConstants
+from cab.complex_automaton import ComplexAutomaton
 
 
 __author__ = 'Michael Wagner'

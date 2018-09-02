@@ -7,10 +7,10 @@ import uuid
 import math
 import operator
 
-from cab.cab_global_constants import GlobalConstants
-from cab.abm.cab_agent import CabAgent
-from cab.ca.cab_ca_hex import CAHex
-from cab.util.cab_rng import get_RNG
+from cab.global_constants import GlobalConstants
+from cab.abm.agent import CabAgent
+from cab.ca.ca_hex import CAHex
+from cab.util.rng import get_RNG
 
 from abm.ss_genetics import Chromosome
 

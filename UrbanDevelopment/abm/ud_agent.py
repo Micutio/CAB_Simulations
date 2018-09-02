@@ -1,6 +1,6 @@
 
 
-from cab.abm.cab_agent import CabAgent
+from cab.abm.agent import CabAgent
 
 __author__ = 'Michael Wagner'
 __version__ = '1.0'

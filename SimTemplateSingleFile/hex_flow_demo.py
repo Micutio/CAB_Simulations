@@ -8,9 +8,9 @@ Uses the Complex Automaton Base.
 import numpy
 
 # CAB system imports.
-from cab.ca.cab_cell import CellHex
-from cab.cab_global_constants import GlobalConstants
-from cab.cab_system import ComplexAutomaton
+from cab.ca.cell import CellHex
+from cab.global_constants import GlobalConstants
+from cab.complex_automaton import ComplexAutomaton
 
 
 __author__ = 'Michael Wagner'

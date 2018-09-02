@@ -1,4 +1,4 @@
-from cab.cab_global_constants import GlobalConstants
+from cab.global_constants import GlobalConstants
 
 
 __author__ = 'Michael Wagner'

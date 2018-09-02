@@ -1,7 +1,7 @@
 
 import math
 
-from cab.util.cab_rng import get_RNG
+from cab.util.rng import get_RNG
 
 __author__ = 'Michael Wagner'
 __version__ = '1.0'

@@ -3,7 +3,7 @@ Main module of the foraging ant simulation.
 """
 
 # CAB system imports.
-from cab.cab_system import ComplexAutomaton
+from cab.complex_automaton import ComplexAutomaton
 
 # Internal Simulation System component imports.
 from st_global_constants import ExampleGC

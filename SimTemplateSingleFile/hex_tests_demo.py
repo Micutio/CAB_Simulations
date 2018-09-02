@@ -9,13 +9,14 @@ import pygame
 import math
 
 # CAB system imports.
-from cab.abm.cab_agent import CabAgent
-from cab.ca.cab_ca_hex import CAHex
-from cab.ca.cab_cell import CellHex
-from cab.cab_global_constants import GlobalConstants
-from cab.cab_system import ComplexAutomaton
-from cab.util.cab_input_handling import InputHandler
-from cab.util.cab_visualization import Visualization
+from cab.abm.agent import CabAgent
+from cab.ca.ca_hex import CAHex
+from cab.ca.cell import CellHex
+from cab.global_constants import GlobalConstants
+from cab.complex_automaton import ComplexAutomaton
+# TODO: Move methods from outdated modules into cell and agent classes!
+from cab.util.input_handling import InputHandler
+from cab.util.visualization import Visualization
 
 
 __author__ = 'Michael Wagner'

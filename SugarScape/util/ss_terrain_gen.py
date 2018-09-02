@@ -1,4 +1,4 @@
-import cab.util.cab_rng
+import cab.util.rng as cab_rng
 
 
 __author__ = 'Michael Wagner'
@@ -38,7 +38,7 @@ class TerrainGenerator:
             for i in range(self.x_dim):
                 # l1[i][j] = int(get_RNG().triangular(self.deepest, self.highest, 5))s
                 mode = (((i + j) / 200) * 20) - 15
-                l1[i][j] = int(get_RNG().triangular(self.deepest + 2 * mode, self.highest + 2 * mode, mode))
+                l1[i][j] = int(cab_rng.get_RNG().triangular(self.deepest + 2 * mode, self.highest + 2 * mode, mode))
 
         for _ in range(self.smoothness):
             for j in range(self.y_dim):
@@ -75,7 +75,7 @@ class TerrainGenerator:
         for j in range(self.y_dim):
             for i in range(self.x_dim):
                 if (i + j) % self.factor == 0:
-                    last_rand = int(get_RNG().triangular(self.deepest, self.highest, self.water_level))
+                    last_rand = int(cab_rng.get_RNG().triangular(self.deepest, self.highest, self.water_level))
                 l1[i][j] = last_rand
 
         for _ in range(self.smoothness):
