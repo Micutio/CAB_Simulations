@@ -8,16 +8,16 @@ Uses the Complex Automaton Base.
 import numpy
 
 # CAB system imports.
-from cab.ca.cell import CellHex
-from cab.global_constants import GlobalConstants
-from cab.complex_automaton import ComplexAutomaton
+import cab.ca.cell as cab_cell
+import cab.global_constants as cab_gc
+import cab.complex_automaton as cab_sys
 
 
 __author__ = 'Michael Wagner'
 __version__ = '1.0'
 
 
-class GC(GlobalConstants):
+class GC(cab_gc.GlobalConstants):
     def __init__(self):
         super().__init__()
         self.VERSION = 'version: 09-2014'
@@ -46,7 +46,7 @@ class GC(GlobalConstants):
         ################################
 
 
-class FlowCell(CellHex):
+class FlowCell(cab_cell.CellHex):
     def __init__(self, x, y, c):
         super().__init__(x, y, c)
         self.pressure = 10
@@ -121,6 +121,6 @@ class FlowCell(CellHex):
 if __name__ == '__main__':
     gc = GC()
     pc = FlowCell(0, 0, gc)
-    simulation = ComplexAutomaton(gc, proto_cell=pc)
+    simulation = cab_sys.ComplexAutomaton(gc, proto_cell=pc)
     simulation.run_main_loop()
     # cProfile.run("simulation.run_main_loop()")

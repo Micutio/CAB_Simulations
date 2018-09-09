@@ -4,16 +4,16 @@ Uses the Complex Automaton Base.
 """
 
 # CAB system imports.
-from cab.ca.cell import CellRect
-from cab.global_constants import GlobalConstants
-from cab.complex_automaton import ComplexAutomaton
+import cab.ca.cell as cab_cell
+import cab.global_constants as cab_gc
+import cab.complex_automaton as cab_sys
 
 
 __author__ = 'Michael Wagner'
 __version__ = '1.0'
 
 
-class GC(GlobalConstants):
+class GC(cab_gc.GlobalConstants):
     def __init__(self):
         super().__init__()
         self.VERSION = 'version: 07-2017'
@@ -42,7 +42,7 @@ class GC(GlobalConstants):
         ################################
 
 
-class GolCell(CellRect):
+class GolCell(cab_cell.CellRect):
     def __init__(self, x, y, global_const):
         super().__init__(x, y, global_const)
         self.alive = 0
@@ -87,6 +87,6 @@ class GolCell(CellRect):
 if __name__ == '__main__':
     gc = GC()
     pc = GolCell(0, 0, gc)
-    simulation = ComplexAutomaton(gc, proto_cell=pc)
+    simulation = cab_sys.ComplexAutomaton(gc, proto_cell=pc)
     simulation.run_main_loop()
     # cProfile.run("simulation.run_main_loop()")
