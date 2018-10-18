@@ -1,0 +1,30 @@
+Development of Cities in Cellular Automata - Notes
+
+---
+
+The general idea of this simulation is to understand how human settlements and cities emerge, grow and sprawl. We want
+to find a cellular automaton that is able to simulate a realistic growth using rules that are kept as simple as possible.
+
+The general idea is to start off with a CA terrain where cells contain altitude values, ranging from below sea level
+(which would be lakes, rivers and oceans) over lowlands and highlands all the way to mountains. Additionally a cell
+also has a food value, which is influenced by altitude and slope (variance of neighboring cell altitudes).
+
+
+1) Food-based model
+
+A first simple model would be to spawn a city on cells with a high enough food value. Once a city is "founded" it
+increases the food value of adjacent cells over time, which allows it to spread. Additional rules will be necessary to
+emulate growth limits and recession of cities.
+
+
+2) Industry-addition
+
+If the simple food-based model works, industry - or production - could be modeled in a similar manner. Cells can then
+have natural resources which further stimulate city growth. In later iterations of the model, that will inevitably
+contain RICO-zones, these will be vital for industrial zones.
+
+
+3) Commerce
+
+Apart from food and production, commerce is the third major driver for city emergence and growth.
+How this can be modeled I have no idea yet.
