@@ -24,7 +24,6 @@ class SSAgentManager(CabAgent):
         self.agent_counter = 0
         self.initial_run = True
         self.possible_starting_locations = []
-        print('initialized agent manager')
 
     def perceive_and_act(self, abm, ca):
         if self.initial_run:
