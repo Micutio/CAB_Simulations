@@ -19,6 +19,8 @@ class ExampleGC(GlobalConstants):
         # Version number or date
         self.VERSION = '03-2016'
         self.TITLE = 'Example Simulation'
+        # Gui to use, either headless, TKinter or PyGame
+        self.GUI = "PyGame"  # Options: "None", TK", "PyGame"
 
         ################################
         #     SIMULATION CONSTANTS     #
@@ -36,7 +38,7 @@ class ExampleGC(GlobalConstants):
         ################################
 
         # Declare constants that are relevant to the agent model of this simulation.
-        
+
         ################################
         #         CA CONSTANTS         #
         ################################

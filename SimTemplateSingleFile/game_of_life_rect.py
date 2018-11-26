@@ -17,6 +17,8 @@ class GC(cab_gc.GlobalConstants):
     def __init__(self):
         super().__init__()
         self.VERSION = 'version: 07-2017'
+        self.TITLE = 'Game of Life in rectangular grid'
+        self.GUI = "PyGame"  # Options: "None", TK", "PyGame"
         ################################
         #     SIMULATION CONSTANTS     #
         ################################
@@ -48,9 +50,9 @@ class GolCell(cab_cell.CellRect):
         self.alive = 0
         self.next_state = 0
         # The rules:
-        #   cell will be [b]orn if number of alive_neighbors is in self.b
+        #   cell will be [b]orn if number of alive_neighbors is 2 in self.b
         self.b = [2]
-        #   cell will [s]tay alive if number of alive_neighbors is in self.s
+        #   cell will [s]tay alive if number of alive_neighbors is 3 or 4 in self.s
         self.s = [3, 4]
 
     def sense_neighborhood(self):
@@ -83,6 +85,7 @@ class GolCell(cab_cell.CellRect):
     def on_rmb_click(self, abm, ca):
         self.alive = False
         self.color = (0, 0, 0)
+
 
 if __name__ == '__main__':
     gc = GC()

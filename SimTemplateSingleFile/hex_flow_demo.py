@@ -21,6 +21,8 @@ class GC(cab_gc.GlobalConstants):
     def __init__(self):
         super().__init__()
         self.VERSION = 'version: 09-2014'
+        self.TITLE = 'Flow Mechanics in Hexagonal Grid'
+        self.GUI = "PyGame"  # Options: "None", TK", "PyGame"
         ################################
         #     SIMULATION CONSTANTS     #
         ################################

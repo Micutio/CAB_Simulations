@@ -9,7 +9,7 @@ class GC(GlobalConstants):
         super().__init__()
         self.VERSION = '03-2017'
         self.TITLE = 'Sugarscape'
-        self.gui = "PyGame"  # Options: "TK", "PyGame"
+        self.GUI = "PyGame"  # Options: "None", TK", "PyGame"
         ################################
         #     SIMULATION CONSTANTS     #
         ################################

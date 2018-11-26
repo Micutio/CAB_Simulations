@@ -9,6 +9,8 @@ class GC(GlobalConstants):
         super().__init__()
         self.VERSION = '03-2016'
         self.TITLE = 'Foraging Ant'
+        self.GUI = "PyGame"  # Options: "None", TK", "PyGame"
+        # Options: "TK", "PyGame"
         ################################
         #     SIMULATION CONSTANTS     #
         ################################

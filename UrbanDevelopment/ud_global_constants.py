@@ -8,7 +8,8 @@ class GC(GlobalConstants):
     def __init__(self):
         super().__init__()
         self.VERSION = '03-2016'
-        self.TITLE = 'Foraging Ant'
+        self.TITLE = 'Urban Development simulation'
+        self.gui = "PyGame"  # Options: "None", TK", "PyGame"
         ################################
         #     SIMULATION CONSTANTS     #
         ################################
@@ -18,7 +19,7 @@ class GC(GlobalConstants):
         ################################
         #        ABM CONSTANTS         #
         ################################
-        
+
         ################################
         #         CA CONSTANTS         #
         ################################
