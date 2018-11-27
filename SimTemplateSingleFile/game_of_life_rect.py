@@ -80,12 +80,15 @@ class GolCell(cab_cell.CellRect):
         return GolCell(x, y, self.gc)
 
     def on_lmb_click(self, abm, ca):
-        self.alive = True
-        self.color = (255, 255, 255)
+        self.alive = not self.alive
+        if self.alive:
+            self.color = (255, 255, 255)
+        else:
+            self.color = self.gc.DEFAULT_CELL_COLOR
 
     def on_rmb_click(self, abm, ca):
         self.alive = False
-        self.color = (0, 0, 0)
+        self.color = self.gc.DEFAULT_CELL_COLOR
 
 
 if __name__ == '__main__':
