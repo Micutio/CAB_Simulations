@@ -50,10 +50,11 @@ class GolCell(cab_cell.CellRect):
         self.alive = 0
         self.next_state = 0
         # The rules:
-        #   cell will be [b]orn if number of alive_neighbors is 2 in self.b
-        self.b = [2]
-        #   cell will [s]tay alive if number of alive_neighbors is 3 or 4 in self.s
-        self.s = [3, 4]
+        #   cell will be [b]orn if number of alive_neighbors is 3 in self.b
+        self.b = [3]
+        #   cell will [s]tay alive if number of alive_neighbors is 2 or 3 in self.s
+        self.s = [2, 3]
+        #   any other configuration will cause the cell to die or stay dead
 
     def sense_neighborhood(self):
         _neighs_alive = 0
