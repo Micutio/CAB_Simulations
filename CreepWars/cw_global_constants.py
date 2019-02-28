@@ -59,7 +59,7 @@ class CreepWarsGC(GlobalConstants):
         self.GRID_WIDTH = self.DIM_X * self.CELL_SIZE
         self.GRID_HEIGHT = self.DIM_Y * self.CELL_SIZE
         # If true, cell borders will be displayed.
-        self.DISPLAY_GRID = True
+        self.DISPLAY_GRID = False
 
         ################################
         #  SIMULATION SPEC. CONSTANTS  #
