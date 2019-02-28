@@ -11,10 +11,12 @@ from cab.abm.agent import CabAgent
 __author__ = 'Michael Wagner'
 __version__ = '1.0'
 
+
 class Team:
     def __init__(self, number, color):
         self.number = number
         self.color = color
+
 
 class CreeplingAgent(CabAgent):
     """
@@ -58,6 +60,7 @@ class CreeplingAgent(CabAgent):
         else:
             self.dead = True
 
+
 class CreepHive(CabAgent):
     """
     Stationary hive, spawning creeplings
@@ -75,10 +78,29 @@ class CreepHive(CabAgent):
                 self.dead = true
                 break;
 
+
 class MasterAgent(CabAgent):
     """
     Spawn hives and assign the cells around them to their teams.
     """
-    def __init(self, None, None, gc):
+    def __init__(self, x, y, gc):
+        super().__init__(x, y, gc)
+        self.teams = list()
         pass
         # TODO: Re-implement 'Thermal Creep' scenario-specific mechanics from abm.
+    
+    def perceive_and_act(self, abm, ca):
+        pass
+
+    def create_teams(self):
+        self.teams = [
+            Team(1, (200, 30, 30)),
+            Team(2, (30, 200, 30)),
+            Team(3, (30, 30, 200)),
+            Team(4, (60, 180, 180))
+        ]
+
+    def create_hives(self, abm, ca):
+        for team in self.teams:
+            # TODO: get x and y coordinates
+            abm.add(CreepHive(x, y, gc, team))
