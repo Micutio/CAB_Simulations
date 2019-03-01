@@ -68,7 +68,7 @@ class CreepCell(CellHex):
         else:
             self.decay += 1
 
-    def increase_temperature(self, team, power):
+    def inc_temperature(self, team, power):
         """
         Called by agents on the cell to raise the temperature of their own team.
         """

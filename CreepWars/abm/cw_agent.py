@@ -45,7 +45,8 @@ class CreeplingAgent(CabAgent):
         neighborhood = ca.get_empty_agent_neighborhood(self.x, self.y, 1)
         possible_cells = [c for c in list(neighborhood.values(
         )) if self.team == c.team and c.temperature >= self.min_density]
-
+        self.prev_x = self.x
+        self.prev_y = self.y
         if possible_cells:
             if self.strategy_walk == 0:
                 random.shuffle(possible_cells)
@@ -57,6 +58,7 @@ class CreeplingAgent(CabAgent):
                 random.shuffle(c_list)
                 cell = random.choice(c_list)
             # Move to new cell
+
             self.x = cell.x
             self.y = cell.y
             cell.inc_temperature(self.team, self.power)
@@ -73,15 +75,27 @@ class CreepHive(CabAgent):
     def __init__(self, x, y, gc, team):
         super().__init__(x, y, gc)
         self.team = team
+        self.color = team.color
         self.size = 10
+        self.max_creeplings = 10
+        self.current_creeplings = 0
+        self.has_spawned_creepling_this_turn = False
+        # TODO: Implement more strategies and rules for creepling generation
 
     def perceive_and_act(self, abm, ca):
+        self.has_spawned_creepling_this_turn = False
         neighborhood = ca.get_empty_agent_neighborhood(self.x, self.y, 1)
         possible_cells = list(neighborhood.values())
+        print(neighborhood)
         for c in possible_cells:
             if c.team != self.team.number:
                 self.dead = True
                 break
+            if self.current_creeplings < self.max_creeplings and not self.has_spawned_creepling_this_turn:
+                abm.add_agent(CreeplingAgent(
+                    c.x, c.y, self.gc, self.team, 0, 0, 0, 0))
+                self.current_creeplings += 1
+                self.has_spawned_creepling_this_turn = True
 
 
 class CreepMasterAgent(CabAgent):
@@ -119,14 +133,26 @@ class CreepMasterAgent(CabAgent):
         x_quart = (x_max - x_min) / 4
         y_quart = (y_max - y_min) / 4
 
-        abm.add_agent(CreepHive(x_min + x_quart, y_min +
-                                y_quart, self.gc, self.teams[0]))
-        abm.add_agent(CreepHive(x_max - x_quart, y_min +
-                                y_quart, self.gc, self.teams[0]))
-        abm.add_agent(CreepHive(x_min + x_quart, y_max -
-                                y_quart, self.gc, self.teams[0]))
-        abm.add_agent(CreepHive(x_max - x_quart, y_max -
-                                y_quart, self.gc, self.teams[0]))
+        abm.add_agent(CreepHive(int(x_min + x_quart), int(y_min +
+                                                          y_quart), self.gc, self.teams[0]))
+        for c in list(ca.get_cell_neighborhood(int(x_min + x_quart), int(y_min + y_quart), 1).values()):
+            print(c)
+            c.team = self.teams[0].number
+
+        abm.add_agent(CreepHive(int(x_max - x_quart), int(y_min +
+                                                          y_quart), self.gc, self.teams[1]))
+        for c in list(ca.get_cell_neighborhood(int(x_max - x_quart), int(y_min + y_quart), 1).values()):
+            c.team = self.teams[1].number
+
+        abm.add_agent(CreepHive(int(x_min + x_quart), int(y_max -
+                                                          y_quart), self.gc, self.teams[2]))
+        for c in list(ca.get_cell_neighborhood(int(x_min + x_quart), int(y_max - y_quart), 1).values()):
+            c.team = self.teams[2].number
+
+        abm.add_agent(CreepHive(int(x_max - x_quart), int(y_max -
+                                                          y_quart), self.gc, self.teams[3]))
+        for c in list(ca.get_cell_neighborhood(int(x_max - x_quart), int(y_max - y_quart), 1).values()):
+            c.team = self.teams[3].number
 
         # for team in self.teams:
         #     # TODO: get x and y coordinates
