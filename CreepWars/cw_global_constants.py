@@ -31,7 +31,7 @@ class CreepWarsGC(GlobalConstants):
         # Starting time step.
         self.TIME_STEP = 0
         # If True, multiple agents can be on the same cell at the same time, false if not.
-        self.ONE_AGENT_PER_CELL = False
+        self.ONE_AGENT_PER_CELL = True
 
         ################################
         #        ABM CONSTANTS         #
@@ -51,15 +51,15 @@ class CreepWarsGC(GlobalConstants):
         # If False, the cells on one border of the CA will be connected to cells on the opposite border.
         self.USE_CA_BORDERS = True
         # How many cells is the CA wide/high?
-        self.DIM_X = 100
-        self.DIM_Y = 75
+        self.DIM_X = 175
+        self.DIM_Y = 100
         # How large is the cell diameter in pixels?
         self.CELL_SIZE = 6
         # How wide/high is the CA in pixels?
         self.GRID_WIDTH = self.DIM_X * self.CELL_SIZE
         self.GRID_HEIGHT = self.DIM_Y * self.CELL_SIZE
         # If true, cell borders will be displayed.
-        self.DISPLAY_GRID = True
+        self.DISPLAY_GRID = False
         self.DEFAULT_GRID_COLOR = (90, 90, 90)
 
         ################################
