@@ -20,7 +20,7 @@ if __name__ == '__main__':
     """
     Main method of the simulation: get up and running in three steps.
     """
-    cab_log.set_log_trace()
+    # cab_log.set_log_trace()
 
     # 1. initialize all components
     gc = CreepWarsGC()

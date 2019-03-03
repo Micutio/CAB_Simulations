@@ -67,6 +67,7 @@ class CreepCell(CellHex):
             self.decay = 0
         else:
             self.decay += 1
+        self.update_color()
 
     def inc_temperature(self, team, power):
         """
@@ -86,13 +87,14 @@ class CreepCell(CellHex):
         return result
 
     def update_color(self):
+        # print("decay: ", self.decay, ", temp:", self.temperature)
         c = int(255 * (self.temperature / self.gc.MAX_TEMPERATURE))
-        if self.team == 0:
+        if self.team == 1:
             col = (c, 0, 0)
-        elif self.team == 1:
-            col = (c, c, 0)
         elif self.team == 2:
+            col = (c, c, 0)
+        elif self.team == 3:
             col = (0, c, 0)
         else:
             col = (0, 0, c)
-        return col
+        self.color = col
