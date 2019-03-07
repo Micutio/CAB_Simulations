@@ -27,7 +27,7 @@ class CreepCell(CellHex):
         """
         super().__init__(x, y, gc)
         self.temperature = 0
-        self.team = -1
+        self.team = None
         self.decay = 0
 
     def clone(self, x, y):
@@ -63,7 +63,7 @@ class CreepCell(CellHex):
             if self.temperature > 0:
                 self.temperature -= 1
             else:
-                self.team = -1
+                self.team = None
             self.decay = 0
         else:
             self.decay += 1
@@ -74,7 +74,7 @@ class CreepCell(CellHex):
         Called by agents on the cell to raise the temperature of their own team.
         """
         result = 0
-        if self.team == team:
+        if self.team and self.team.number == team.number:
             if (self.temperature + power) < self.gc.MAX_TEMPERATURE:
                 self.temperature += power
                 result = power
@@ -88,13 +88,14 @@ class CreepCell(CellHex):
 
     def update_color(self):
         # print("decay: ", self.decay, ", temp:", self.temperature)
-        c = int(255 * (self.temperature / self.gc.MAX_TEMPERATURE))
-        if self.team == 1:
-            col = (c, 0, 0)
-        elif self.team == 2:
-            col = (c, c, 0)
-        elif self.team == 3:
-            col = (0, c, 0)
+        if not self.team:
+            self.color = self.gc.DEFAULT_CELL_COLOR
         else:
-            col = (0, 0, c)
-        self.color = col
+            r = int(self.team.color[0] *
+                    (self.temperature / self.gc.MAX_TEMPERATURE))
+            g = int(self.team.color[1] *
+                    (self.temperature / self.gc.MAX_TEMPERATURE))
+            b = int(self.team.color[2] *
+                    (self.temperature / self.gc.MAX_TEMPERATURE))
+
+            self.color = (r, g, b)
