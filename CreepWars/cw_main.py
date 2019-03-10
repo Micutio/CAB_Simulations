@@ -5,6 +5,7 @@ Main module of the foraging ant simulation.
 # CAB system imports.
 from cab.complex_automaton import ComplexAutomaton
 import cab.util.logging as cab_log
+import cab.util.rng as cab_rng
 
 # Internal Simulation System component imports.
 from cw_global_constants import CreepWarsGC
@@ -21,6 +22,7 @@ if __name__ == '__main__':
     Main method of the simulation: get up and running in three steps.
     """
     # cab_log.set_log_trace()
+    cab_rng.seed_RNG(1234)
 
     # 1. initialize all components
     gc = CreepWarsGC()
