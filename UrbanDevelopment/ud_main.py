@@ -1,8 +1,11 @@
-from cab.complex_automaton import ComplexAutomaton
 
+from cab.complex_automaton import ComplexAutomaton
+import cab.util.rng as cab_rng
+
+from ud_global_constants import GC
 from abm.ud_agent import UrbanAgent
 from ca.ud_cell import WorldCell
-from ud_global_constants import GC
+from util.ud_terrain_gen import TerrainGenerator
 
 """
 Main module of the urban development simulation.
@@ -35,12 +38,16 @@ __version__ = '1.0'
 
 if __name__ == '__main__':
 
+    cab_rng.seed_RNG(1234)
+
     gc = GC()
     pc = WorldCell(0, 0, gc)
     pa = UrbanAgent(0, 0, gc)
     
-    # Use assets to initialize simulation system.
+    tg = TerrainGenerator(gc)
+    pc.set_terrain_gen(tg)
 
+    # Use assets to initialize simulation system.
     simulation = ComplexAutomaton(gc, proto_cell=pc)
 
     # Run the simulation

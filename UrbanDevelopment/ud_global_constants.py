@@ -9,13 +9,14 @@ class GC(GlobalConstants):
         super().__init__()
         self.VERSION = '03-2016'
         self.TITLE = 'Urban Development simulation'
-        self.gui = "PyGame"  # Options: "None", TK", "PyGame"
+        self.GUI = "PyGame"  # Options: "None", TK", "PyGame"
         ################################
         #     SIMULATION CONSTANTS     #
         ################################
         self.RUN_SIMULATION = False
         self.TIME_STEP = 0
         self.ONE_AGENT_PER_CELL = False
+        self.CELL_VISUAL = "altitude"
         ################################
         #        ABM CONSTANTS         #
         ################################
@@ -30,12 +31,7 @@ class GC(GlobalConstants):
         self.CELL_SIZE = 7
         self.GRID_WIDTH = self.DIM_X * self.CELL_SIZE
         self.GRID_HEIGHT = self.DIM_Y * self.CELL_SIZE
-        self.DISPLAY_GRID = True
+        self.DISPLAY_GRID = False
         ################################
         #  SIMULATION SPEC. CONSTANTS  #
         ################################
-        self.MAX_ANTS = 25
-        self.MAX_PHEROMONE = 100
-        self.MAX_FOOD = 100
-        self.DIFFUSION = 0.001
-        self.EVAPORATION = 0.001

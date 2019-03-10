@@ -2,9 +2,9 @@
 Module containing the cell definition for the urban world.
 """
 
-from cab.ca.cab_cell import CellHex
+from cab.ca.cell import CellHex
 
-from cab.util.cab_rng import get_RNG
+from cab.util.rng import get_RNG
 
 __author__ = 'Michael Wagner'
 __version__ = '1.0'
@@ -17,11 +17,19 @@ class WorldCell(CellHex):
 
     def __init__(self, x, y, gc):
         super().__init__(x, y, gc)
+        self.altitude = 0
         self.zone = EmptyZone()
         self.neighbor_zones = set()
+        self.t_gen = None
 
     def clone(self, x, y):
-        return WorldCell(x, y, self.gc)
+        wc = WorldCell(x, y, self.gc)
+        wc.set_terrain_gen(self.t_gen)
+        return wc
+    
+    def set_terrain_gen(self, tg):
+        self.t_gen = tg
+        self.altitude = int(self.t_gen.get(self.x, self.y))
 
     def sense_neighborhood(self):
         if self.zone.type == 'EMPTY':
@@ -37,21 +45,29 @@ class WorldCell(CellHex):
 
     def update(self):
         """
-        This method regulates the cell's temperature according to the temperature of its neighbors.
+        This method regulates the cell's state according to the state of its neighbors.
         """
-        if self.zone == 'EMPTY':
+        if self.zone.type == 'EMPTY':
             self.zone.update(self)
         else:
             if len(self.neighbor_zones) > 0:
                 new_zone = get_RNG().choice(list(self.neighbor_zones))
-                if new_zone == 'RESIDENTIAL':
+                if new_zone.type == 'RESIDENTIAL':
                     self.zone = ResidentialZone()
-                elif new_zone == 'COMMERCIAL':
+                elif new_zone.type == 'COMMERCIAL':
                     self.zone = CommercialZone()
-                elif new_zone == 'INDUSTRIAL':
+                elif new_zone.type == 'INDUSTRIAL':
                     self.zone = IndustrialZone()
                 self.color = self.zone.color
         self.neighbor_zones.clear()
+        print("self.color: ", self.color)
+        self.update_color()
+
+    def update_color(self):
+        if self.zone.type == 'EMPTY':
+            # Set color accoring to height map
+            self.color = self.t_gen.get_color_for_terrain(self)
+            print(self.color)
 
     def on_lmb_click(self, abm, ca):
         """
@@ -80,7 +96,7 @@ class EmptyZone():
 
     def update(self, parent_cell):
         """
-        This method regulates the cell's temperature according to the temperature of its neighbors.
+        This method regulates the cell's state according to the state of its neighbors.
         """
         pass
 
@@ -98,7 +114,7 @@ class ResidentialZone():
 
     def update(self, parent_cell):
         """
-        This method regulates the cell's temperature according to the temperature of its neighbors.
+        This method regulates the cell's state according to the state of its neighbors.
         """
         pass
 
@@ -116,7 +132,7 @@ class CommercialZone():
 
     def update(self, parent_cell):
         """
-        This method regulates the cell's temperature according to the temperature of its neighbors.
+        This method regulates the cell's state according to the state of its neighbors.
         """
         pass
 
@@ -134,6 +150,6 @@ class IndustrialZone():
 
     def update(self, parent_cell):
         """
-        This method regulates the cell's temperature according to the temperature of its neighbors.
+        This method regulates the cell's state according to the state of its neighbors.
         """
         pass
