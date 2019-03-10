@@ -17,8 +17,8 @@ class CreepWarsGC(GlobalConstants):
         super().__init__()
 
         # Version number or date
-        self.VERSION = '03-2016'
-        self.TITLE = 'Example Simulation'
+        self.VERSION = '03-2019'
+        self.TITLE = 'Creep Wars'
         # Gui to use, either headless, TKinter or PyGame
         self.GUI = "PyGame"  # Options: "None", TK", "PyGame"
 
