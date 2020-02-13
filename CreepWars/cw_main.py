@@ -1,5 +1,5 @@
 """
-Main module of the foraging ant simulation.
+Main module of the creep war simulation.
 """
 
 # CAB system imports.
