@@ -18,7 +18,7 @@ lead to an organic seeming behavior and lively little anthills.
 
 ### Screenshots
 
-![screenshot of foraging ants](https://github.com/Micutio/CAB_Simulations/blob/master/media/ant_screenshot1.png" Foraging Ant Screenshot")
+![screenshot of foraging ants](https://github.com/Micutio/CAB_Simulations/blob/master/media/ant_screenshot1.png "Foraging Ant Screenshot")
 
 ![screenshot of creepwars](https://github.com/Micutio/CAB_Simulations/blob/master/media/creep-wars_screenshot1.png "Creep Wars Screenshot")
 
